@@ -1,4 +1,6 @@
 <script lang="ts">
+import { parse as dotenvParse } from 'dotenv'
+
 import InputSelect from '~/components/InputSelect.svelte'
 
 // Props
@@ -13,6 +15,13 @@ const inputTypes = ['.env file', 'JSON']
 const outputTypes = ['.env file', 'JSON']
 let selectedInputType = inputTypes[0]!
 let selectedOutputType = outputTypes[0]!
+let inputValue = ''
+let outputValue = ''
+
+function convert() {
+	console.log('Convert')
+	outputValue = JSON.stringify(dotenvParse(inputValue), null, 2)
+}
 </script>
 
 <div
@@ -54,11 +63,14 @@ let selectedOutputType = outputTypes[0]!
 					class="form-textarea bg-gray-100 mt-1 block w-full p-2 rounded-md flex-1 resize-none"
 					rows="3"
 					placeholder="Enter some text"
+					bind:value={inputValue}
 				></textarea>
 			</label>
 
 			<div class="flex justify-end space-x-2 pr-4">
-				<button class="btn btn-primary">Convert</button>
+				<button class="btn btn-primary" on:click|preventDefault={convert}>
+					Convert
+				</button>
 				<button class="btn btn-secondary">Clear</button>
 			</div>
 		</div>
@@ -67,8 +79,8 @@ let selectedOutputType = outputTypes[0]!
 		<div class="space-y-4">
 			<label class="block h-64 space-y-2 flex flex-col">
 				<span class="text-gray-700">Output value</span>
-				<div class="form-textarea bg-gray-100 mt-1 block w-full p-2 rounded-md flex-1">
-					Output value
+				<div class="form-textarea bg-gray-100 mt-1 block w-full p-2 rounded-md flex-1 whitespace-pre">
+					{outputValue}
 				</div>
 			</label>
 
