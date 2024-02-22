@@ -2,8 +2,6 @@
 import Base from '~/layouts/Base.astro'
 import type { Props as BaseProps } from '~/layouts/Base.astro'
 
-import favicon from '~/assets/favicon.png'
-
 export interface Props extends Omit<BaseProps, 'title'>
 {
 	title?: BaseProps['title']
@@ -47,7 +45,7 @@ const baseProps: BaseProps = {
 	description: Astro.props.description || site.description,
 	author: Astro.props.author || site.author,
 	themeColor: Astro.props.themeColor || site.themeColor,
-	favicon: Astro.props.favicon || favicon,
+	favicon: Astro.props.favicon, // || favicon,
 }
 ---
 
