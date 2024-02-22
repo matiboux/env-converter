@@ -1,0 +1,60 @@
+---
+import Base from '~/layouts/Base.astro'
+import type { Props as BaseProps } from '~/layouts/Base.astro'
+
+import favicon from '~/assets/favicon.png'
+
+export interface Props extends Omit<BaseProps, 'title'>
+{
+	title?: BaseProps['title']
+	noScripts?: boolean
+}
+
+const {
+	title,
+} = Astro.props
+
+interface Site
+{
+	title?: string
+	description?: string
+	author?: string
+	themeColor?: string
+	gtag?: string
+}
+
+const site: Site = {
+	title: 'Matiboux.me',
+	description: 'My personal website, about me and my projects!',
+	author: 'Matiboux',
+	themeColor: '#202020',
+	gtag: 'UA-53429285-6',
+}
+
+if (site.title === undefined && Astro.props.title === undefined)
+{
+	throw new Error('Title is undefined')
+}
+
+const baseProps: BaseProps = {
+	...Astro.props,
+	title: title
+		? (site.title
+			? `${title} – ${site.title}`
+			: title
+		)
+		: (site.title || ''),
+	description: Astro.props.description || site.description,
+	author: Astro.props.author || site.author,
+	themeColor: Astro.props.themeColor || site.themeColor,
+	favicon: Astro.props.favicon || favicon,
+}
+---
+
+<Base {...baseProps}>
+
+	<slot slot="head" name="head" />
+
+	<slot />
+
+</Base>
