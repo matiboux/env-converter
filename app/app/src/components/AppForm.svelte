@@ -48,18 +48,47 @@ let selectedOutputType = outputTypes[0]!
 
 		<!-- Input value -->
 		<div class="space-y-4">
-			<label class="block space-y-2">
+			<label class="block h-64 space-y-2 flex flex-col">
 				<span class="text-gray-700">Input value</span>
-				<textarea class="form-textarea bg-gray-100 mt-1 block w-full p-2 rounded-md" rows="3" placeholder="Enter some text"></textarea>
+				<textarea
+					class="form-textarea bg-gray-100 mt-1 block w-full p-2 rounded-md flex-1 resize-none"
+					rows="3"
+					placeholder="Enter some text"
+				></textarea>
 			</label>
+
+			<div class="flex justify-end space-x-2 pr-4">
+				<button class="btn btn-primary">Convert</button>
+				<button class="btn btn-secondary">Clear</button>
+			</div>
 		</div>
 
 		<!-- Output value -->
 		<div class="space-y-4">
-			<label class="block space-y-2">
+			<label class="block h-64 space-y-2 flex flex-col">
 				<span class="text-gray-700">Output value</span>
-				<div class="form-textarea bg-gray-100 mt-1 block w-full p-2 rounded-md">Output value</div>
+				<div class="form-textarea bg-gray-100 mt-1 block w-full p-2 rounded-md flex-1">
+					Output value
+				</div>
 			</label>
+
+			<div class="flex justify-start space-x-2 pl-4">
+				<button class="btn btn-secondary">Swap</button>
+				<button class="btn btn-primary">Copy</button>
+			</div>
 		</div>
 	</div>
 </div>
+
+<style lang="scss">
+.btn {
+	@apply
+		bg-gray-400
+		hover:bg-gray-500
+		py-2 px-4 rounded-md text-white font-semibold;
+
+	&.btn-primary {
+		@apply bg-blue-500 hover:bg-blue-600;
+	}
+}
+</style>
