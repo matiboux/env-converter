@@ -1,11 +1,6 @@
 ---
-import { getAbsoluteLocaleUrl } from 'astro:i18n'
-
 import Layout from '~/layouts/Layout.astro'
 import AppForm from '~/components/AppForm.svelte'
-
-import { defaultLocale } from '~/i18n'
-const _url = (path?: string) => getAbsoluteLocaleUrl(Astro.currentLocale ?? defaultLocale, path)
 ---
 
 <Layout
