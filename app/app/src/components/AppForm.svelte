@@ -76,8 +76,6 @@ onMount(() =>
 
 function convert()
 {
-	console.log('Convert')
-
 	if (!inputValue)
 	{
 		outputValue = ''
@@ -116,8 +114,8 @@ function swap()
 	}
 
 	// Swap selected input & output types
-	const tempType = selectedInputType.get()
-	selectedInputType.set(selectedOutputType)
+	const tempType = $selectedInputType
+	selectedInputType.set($selectedOutputType)
 	selectedOutputType.set(tempType)
 
 	// Swap input & output values
