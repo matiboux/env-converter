@@ -16,6 +16,7 @@ export {
 const defaultInputValue = 'HOST=localhost\nPORT=80\nSECRET=secret'
 let inputValue = defaultInputValue
 let outputValue = ''
+let outputValueElement = null
 let convertError: boolean = false
 
 function convertFromEnv(input: string)
@@ -131,6 +132,12 @@ function swap()
 function copy()
 {
 	navigator.clipboard.writeText(outputValue)
+	if (outputValueElement)
+	{
+		outputValueElement.focus()
+		outputValueElement.select()
+
+	}
 }
 </script>
 
@@ -201,8 +208,9 @@ function copy()
 						class="outputValue form-textarea bg-gray-100 block w-full h-full p-2 rounded-md flex-1 resize-none text-gray-600"
 						class:error={convertError}
 						placeholder="Enter some text"
+						bind:this={outputValueElement}
 						bind:value={outputValue}
-						disabled
+						readonly
 					></textarea>
 				</div>
 			</label>
