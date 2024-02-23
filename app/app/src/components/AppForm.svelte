@@ -38,6 +38,13 @@ let selectedOutputType = outputTypes[1]!
 function convert() {
 	console.log('Convert')
 
+	if (!inputValue)
+	{
+		outputValue = ''
+		convertError = false
+		return
+	}
+
 	try
 	{
 		outputValue = convertFrom[selectedInputType](inputValue)
