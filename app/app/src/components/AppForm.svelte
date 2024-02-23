@@ -37,7 +37,7 @@ const convertFrom: Record<string, { convert: (input: string) => object, swapTo?:
 function convertToEnv(input: object)
 {
 	return Object.entries(input)
-		.map(([key, value]) => `${key}=${value}`)
+		.map(([key, value]) => `${key}=${value.match(/\s/) ? `"${value}"` : value}`)
 		.join('\n')
 }
 
