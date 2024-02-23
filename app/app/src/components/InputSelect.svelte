@@ -4,11 +4,13 @@ let userClass: string | undefined = undefined
 let style: string | undefined = undefined
 let options: string[] = []
 let selectedOption: string = ''
+let disabled: boolean = false
 export {
 	userClass as class,
 	style,
 	options,
 	selectedOption,
+	disabled,
 }
 
 if (!selectedOption && options.length > 0)
@@ -25,6 +27,7 @@ if (!selectedOption && options.length > 0)
 				class="form-radio text-indigo-600 h-4 w-4"
 				value={option}
 				bind:group={selectedOption}
+				disabled={disabled}
 			/>
 			<span class="ml-2">{option}</span>
 		</label>

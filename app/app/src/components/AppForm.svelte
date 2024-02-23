@@ -14,7 +14,7 @@ export {
 const inputTypes = ['.env file', 'JSON']
 const outputTypes = ['.env file', 'JSON']
 let selectedInputType = inputTypes[0]!
-let selectedOutputType = outputTypes[0]!
+let selectedOutputType = outputTypes[1]!
 let inputValue = ''
 let outputValue = ''
 
@@ -48,7 +48,7 @@ function convert() {
 		<div class="space-y-4">
 			<div class="block space-y-2">
 				<span class="text-gray-700">Output type</span>
-				<InputSelect options={outputTypes} bind:selectedOption={selectedOutputType} style={'bg-red-500'} />
+				<InputSelect options={outputTypes} bind:selectedOption={selectedOutputType} style={'bg-red-500'} disabled />
 			</div>
 			<p class="text-gray-500 italic">
 				Selected output type: {selectedOutputType}
