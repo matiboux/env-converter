@@ -65,6 +65,19 @@ function clear()
 	outputValue = ''
 	convertError = false
 }
+
+function swap()
+{
+	// Swap selected input & output types
+	const tempType = selectedInputType
+	selectedInputType = selectedOutputType
+	selectedOutputType = tempType
+
+	// Swap input & output values
+	const tempValue = inputValue
+	inputValue = outputValue
+	outputValue = tempValue
+}
 </script>
 
 <div
@@ -135,7 +148,9 @@ function clear()
 			</label>
 
 			<div class="flex justify-start space-x-2 pl-4">
-				<button class="btn btn-secondary">Swap</button>
+				<button class="btn btn-secondary" on:click|preventDefault={swap}>
+					Swap
+				</button>
 				<button class="btn btn-primary">Copy</button>
 			</div>
 		</div>
