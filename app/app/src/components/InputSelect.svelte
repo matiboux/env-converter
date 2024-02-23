@@ -28,7 +28,7 @@ if (!selectedOption && options.length > 0)
 				value={option}
 				bind:group={selectedOption}
 				disabled={disabled}
-				on:change
+				on:change|preventDefault
 			/>
 			<span class="ml-2">{option}</span>
 		</label>

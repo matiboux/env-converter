@@ -80,7 +80,11 @@ function clear()
 		<div class="space-y-4">
 			<div class="block space-y-2">
 				<span class="text-gray-700">Input type</span>
-				<InputSelect options={inputTypes} bind:selectedOption={$selectedInputType} />
+				<InputSelect
+					options={inputTypes}
+					bind:selectedOption={$selectedInputType}
+					on:change={convert}
+				/>
 			</div>
 			<p class="text-gray-500 italic">
 				Selected input type: {$selectedInputType}
