@@ -104,12 +104,20 @@ function clear()
 	convertError = false
 }
 
+let canSwap: boolean = false
+$: canSwap = outputTypes.includes($selectedInputType) && inputTypes.includes($selectedOutputType)
+
 function swap()
 {
+	if (!canSwap)
+	{
+		return
+	}
+
 	// Swap selected input & output types
-	const tempType = selectedInputType
-	selectedInputType = selectedOutputType
-	selectedOutputType = tempType
+	const tempType = selectedInputType.get()
+	selectedInputType.set(selectedOutputType)
+	selectedOutputType.set(tempType)
 
 	// Swap input & output values
 	const tempValue = inputValue
@@ -200,7 +208,11 @@ function copy()
 			</label>
 
 			<div class="flex justify-start space-x-2 pl-4">
-				<button class="btn btn-secondary" on:click|preventDefault={swap}>
+				<button
+					class="btn btn-secondary"
+					disabled={!canSwap}
+					on:click|preventDefault={swap}
+				>
 					Swap
 				</button>
 				<button class="btn btn-primary" on:click|preventDefault={copy}>
@@ -220,6 +232,13 @@ function copy()
 
 	&.btn-primary {
 		@apply bg-blue-500 hover:bg-blue-600;
+	}
+
+	&[disabled] {
+		@apply
+			bg-gray-300
+			cursor-not-allowed
+			;
 	}
 }
 
