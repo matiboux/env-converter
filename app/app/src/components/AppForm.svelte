@@ -1,4 +1,5 @@
 <script lang="ts">
+import { onMount } from 'svelte'
 import { parse as dotenvParse } from 'dotenv'
 import { persistentAtom } from '@nanostores/persistent'
 
@@ -12,7 +13,8 @@ export {
 	style,
 }
 
-let inputValue = ''
+const defaultInputValue = 'HOST=localhost\nPORT=80\nSECRET=secret'
+let inputValue = defaultInputValue
 let outputValue = ''
 let convertError: boolean = false
 
@@ -52,6 +54,11 @@ const inputTypes = Object.keys(convertFrom)
 const outputTypes = ['.env file', 'JSON']
 let selectedInputType = persistentAtom('selectedInputType', inputTypes[0]!)
 let selectedOutputType = persistentAtom('selectedOutputType', outputTypes[1]!)
+
+onMount(() =>
+	{
+		convert()
+	})
 
 function convert()
 {
@@ -98,6 +105,11 @@ function swap()
 
 	// Convert again
 	convert()
+}
+
+function copy()
+{
+	navigator.clipboard.writeText(outputValue)
 }
 </script>
 
@@ -177,7 +189,9 @@ function swap()
 				<button class="btn btn-secondary" on:click|preventDefault={swap}>
 					Swap
 				</button>
-				<button class="btn btn-primary">Copy</button>
+				<button class="btn btn-primary" on:click|preventDefault={copy}>
+					Copy
+				</button>
 			</div>
 		</div>
 	</div>
