@@ -162,15 +162,16 @@ function copy()
 
 		<!-- Input value -->
 		<div class="space-y-4">
-			<label class="block h-64 space-y-2 flex flex-col">
+			<label class="block space-y-2 flex flex-col">
 				<span class="text-gray-700">Input value</span>
-				<textarea
-					class="form-textarea bg-gray-100 mt-1 block w-full p-2 rounded-md flex-1 resize-none"
-					rows="3"
-					placeholder="Enter some text"
-					bind:value={inputValue}
-					on:change|preventDefault={convert}
-				></textarea>
+				<div class="h-64">
+					<textarea
+						class="form-textarea bg-gray-100 block w-full h-full p-2 rounded-md flex-1 resize-none"
+						placeholder="Enter some text"
+						bind:value={inputValue}
+						on:change|preventDefault={convert}
+					></textarea>
+				</div>
 			</label>
 
 			<div class="flex justify-end space-x-2 pr-4">
@@ -185,10 +186,16 @@ function copy()
 
 		<!-- Output value -->
 		<div class="space-y-4">
-			<label class="block h-64 space-y-2 flex flex-col">
+			<label class="block space-y-2 flex flex-col">
 				<span class="text-gray-700">Output value</span>
-				<div class="outputValue form-textarea bg-gray-100 mt-1 block w-full p-2 rounded-md flex-1 whitespace-pre text-gray-600" class:error={convertError}>
-					{outputValue}
+				<div class="h-64">
+					<textarea
+						class="outputValue form-textarea bg-gray-100 block w-full h-full p-2 rounded-md flex-1 resize-none text-gray-600"
+						class:error={convertError}
+						placeholder="Enter some text"
+						bind:value={outputValue}
+						disabled
+					></textarea>
 				</div>
 			</label>
 
