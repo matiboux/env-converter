@@ -18,15 +18,13 @@ interface Site
 	description?: string
 	author?: string
 	themeColor?: string
-	gtag?: string
 }
 
 const site: Site = {
-	title: 'Matiboux.me',
-	description: 'My personal website, about me and my projects!',
+	title: 'Env Converter',
+	description: 'Online conversion tool for env files.',
 	author: 'Matiboux',
-	themeColor: '#202020',
-	gtag: 'UA-53429285-6',
+	themeColor: '#ffffff',
 }
 
 if (site.title === undefined && Astro.props.title === undefined)
