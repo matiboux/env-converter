@@ -31,7 +31,7 @@ function convertFromJson(input: string)
 
 const convertFrom: Record<string, { convert: (input: string) => object, swapTo?: keyof typeof convertTo }> = {
 	'.env file': { convert: convertFromEnv, swapTo: '.env file' },
-	'JSON': { convert: convertFromJson, swapTo: 'JSON' },
+	'JSON': { convert: convertFromJson, swapTo: 'JSON (formatted)' },
 }
 
 function convertToEnv(input: object)
@@ -39,6 +39,11 @@ function convertToEnv(input: object)
 	return Object.entries(input)
 		.map(([key, value]) => `${key}=${value}`)
 		.join('\n')
+}
+
+function convertToJsonInline(input: object)
+{
+	return JSON.stringify(input)
 }
 
 function convertToJson(input: object)
@@ -60,14 +65,15 @@ function convertToAzure(input: object)
 
 const convertTo: Record<string, { convert: (input: object) => string, swapTo?: keyof typeof convertTo }> = {
 	'.env file': { convert: convertToEnv, swapTo: '.env file' },
-	'JSON': { convert: convertToJson, swapTo: 'JSON' },
+	'JSON (inline)': { convert: convertToJsonInline, swapTo: 'JSON' },
+	'JSON (formatted)': { convert: convertToJson, swapTo: 'JSON' },
 	'Azure': { convert: convertToAzure },
 }
 
 const inputTypes: Array<keyof typeof convertFrom> = Object.keys(convertFrom)
 const outputTypes: Array<keyof typeof convertTo> = Object.keys(convertTo)
 let selectedInputType = persistentAtom<keyof typeof convertFrom>('selectedInputType', inputTypes[0]!)
-let selectedOutputType = persistentAtom<keyof typeof convertTo>('selectedOutputType', outputTypes[1]!)
+let selectedOutputType = persistentAtom<keyof typeof convertTo>('selectedOutputType', outputTypes[2]!)
 
 onMount(() =>
 	{
