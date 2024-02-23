@@ -35,7 +35,8 @@ const outputTypes = ['.env file', 'JSON']
 let selectedInputType = inputTypes[0]!
 let selectedOutputType = outputTypes[1]!
 
-function convert() {
+function convert()
+{
 	console.log('Convert')
 
 	if (!inputValue)
@@ -55,6 +56,13 @@ function convert() {
 		outputValue = error.message
 		convertError = true
 	}
+}
+
+function clear()
+{
+	inputValue = ''
+	outputValue = ''
+	convertError = false
 }
 </script>
 
@@ -105,7 +113,9 @@ function convert() {
 				<button class="btn btn-primary" on:click|preventDefault={convert}>
 					Convert
 				</button>
-				<button class="btn btn-secondary">Clear</button>
+				<button class="btn btn-secondary" on:click|preventDefault={clear}>
+					Clear
+				</button>
 			</div>
 		</div>
 
