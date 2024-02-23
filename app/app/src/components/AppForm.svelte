@@ -168,7 +168,7 @@ function swap()
 		<div class="space-y-4">
 			<label class="block h-64 space-y-2 flex flex-col">
 				<span class="text-gray-700">Output value</span>
-				<div class="outputValue form-textarea bg-gray-100 mt-1 block w-full p-2 rounded-md flex-1 whitespace-pre" class:error={convertError}>
+				<div class="outputValue form-textarea bg-gray-100 mt-1 block w-full p-2 rounded-md flex-1 whitespace-pre text-gray-600" class:error={convertError}>
 					{outputValue}
 				</div>
 			</label>
