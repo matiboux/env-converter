@@ -29,9 +29,9 @@ function convertFromJson(input: string)
 	return JSON.parse(input)
 }
 
-const convertFrom = {
-	'.env file': convertFromEnv,
-	'JSON': convertFromJson,
+const convertFrom: Record<string, { convert: (input: string) => object, swapTo?: keyof typeof convertTo }> = {
+	'.env file': { convert: convertFromEnv, swapTo: '.env file' },
+	'JSON': { convert: convertFromJson, swapTo: 'JSON' },
 }
 
 function convertToEnv(input: object)
@@ -58,16 +58,16 @@ function convertToAzure(input: object)
 	)
 }
 
-const convertTo = {
-	'.env file': convertToEnv,
-	'JSON': convertToJson,
-	'Azure': convertToAzure,
+const convertTo: Record<string, { convert: (input: object) => string, swapTo?: keyof typeof convertTo }> = {
+	'.env file': { convert: convertToEnv, swapTo: '.env file' },
+	'JSON': { convert: convertToJson, swapTo: 'JSON' },
+	'Azure': { convert: convertToAzure },
 }
 
-const inputTypes = Object.keys(convertFrom)
-const outputTypes = Object.keys(convertTo)
-let selectedInputType = persistentAtom('selectedInputType', inputTypes[0]!)
-let selectedOutputType = persistentAtom('selectedOutputType', outputTypes[1]!)
+const inputTypes: Array<keyof typeof convertFrom> = Object.keys(convertFrom)
+const outputTypes: Array<keyof typeof convertTo> = Object.keys(convertTo)
+let selectedInputType = persistentAtom<keyof typeof convertFrom>('selectedInputType', inputTypes[0]!)
+let selectedOutputType = persistentAtom<keyof typeof convertTo>('selectedOutputType', outputTypes[1]!)
 
 onMount(() =>
 	{
@@ -85,8 +85,8 @@ function convert()
 
 	try
 	{
-		const value = convertFrom[$selectedInputType](inputValue)
-		outputValue = convertTo[$selectedOutputType](value)
+		const value = convertFrom[$selectedInputType]?.convert(inputValue)
+		outputValue = convertTo[$selectedOutputType]?.convert(value)
 		convertError = false
 	}
 	catch (error)
@@ -104,7 +104,7 @@ function clear()
 }
 
 let canSwap: boolean = false
-$: canSwap = outputTypes.includes($selectedInputType) && inputTypes.includes($selectedOutputType)
+$: canSwap = convertFrom[$selectedInputType]?.swapTo !== undefined && convertTo[$selectedOutputType]?.swapTo !== undefined
 
 function swap()
 {
@@ -114,9 +114,9 @@ function swap()
 	}
 
 	// Swap selected input & output types
-	const tempType = $selectedInputType
-	selectedInputType.set($selectedOutputType)
-	selectedOutputType.set(tempType)
+	const currentInputType = $selectedInputType
+	selectedInputType.set(convertTo[$selectedOutputType].swapTo!)
+	selectedOutputType.set(convertFrom[currentInputType].swapTo!)
 
 	// Swap input & output values
 	const tempValue = inputValue
