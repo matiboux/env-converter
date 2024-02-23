@@ -11,7 +11,7 @@ export {
 	selectedOption,
 }
 
-if (options.length > 0)
+if (!selectedOption && options.length > 0)
 {
 	selectedOption = options[0]!
 }
