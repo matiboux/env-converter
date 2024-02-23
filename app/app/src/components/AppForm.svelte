@@ -11,16 +11,33 @@ export {
 	style,
 }
 
-const inputTypes = ['.env file', 'JSON']
-const outputTypes = ['.env file', 'JSON']
-let selectedInputType = inputTypes[0]!
-let selectedOutputType = outputTypes[1]!
 let inputValue = ''
 let outputValue = ''
 
+function convertFromEnv(input: string)
+{
+	return JSON.stringify(dotenvParse(input), null, 2)
+}
+
+function convertFromJson(input: string)
+{
+	return JSON.parse(input)
+}
+
+const convertFrom = {
+	'.env file': convertFromEnv,
+	'JSON': convertFromJson,
+}
+
+const inputTypes = Object.keys(convertFrom)
+const outputTypes = ['.env file', 'JSON']
+let selectedInputType = inputTypes[0]!
+let selectedOutputType = outputTypes[1]!
+
 function convert() {
 	console.log('Convert')
-	outputValue = JSON.stringify(dotenvParse(inputValue), null, 2)
+
+	outputValue = convertFrom[selectedInputType](inputValue)
 }
 </script>
 
