@@ -18,7 +18,7 @@ let convertError: boolean = false
 
 function convertFromEnv(input: string)
 {
-	return JSON.stringify(dotenvParse(input), null, 2)
+	return dotenvParse(input)
 }
 
 function convertFromJson(input: string)
@@ -29,6 +29,21 @@ function convertFromJson(input: string)
 const convertFrom = {
 	'.env file': convertFromEnv,
 	'JSON': convertFromJson,
+}
+
+function convertToEnv(input: string)
+{
+	return null
+}
+
+function convertToJson(input: string)
+{
+	return JSON.stringify(input, null, 2)
+}
+
+const convertTo = {
+	'.env file': convertToEnv,
+	'JSON': convertToJson,
 }
 
 const inputTypes = Object.keys(convertFrom)
@@ -49,7 +64,8 @@ function convert()
 
 	try
 	{
-		outputValue = convertFrom[$selectedInputType](inputValue)
+		const value = convertFrom[$selectedInputType](inputValue)
+		outputValue = convertTo[$selectedOutputType](value)
 		convertError = false
 	}
 	catch (error)
