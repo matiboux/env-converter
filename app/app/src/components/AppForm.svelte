@@ -111,6 +111,7 @@ function clear()
 
 let canSwap: boolean = false
 $: canSwap =
+	convertError === null &&
 	convertFrom[$selectedInputType]?.swapTo !== undefined &&
 	convertFrom[$selectedInputType]?.swapTo !== $selectedOutputType &&
 	convertTo[$selectedOutputType]?.swapTo !== undefined &&
