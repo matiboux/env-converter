@@ -95,6 +95,9 @@ function swap()
 	const tempValue = inputValue
 	inputValue = outputValue
 	outputValue = tempValue
+
+	// Convert again
+	convert()
 }
 </script>
 
