@@ -13,6 +13,7 @@ export {
 
 let inputValue = ''
 let outputValue = ''
+let convertError: boolean = false
 
 function convertFromEnv(input: string)
 {
@@ -37,7 +38,16 @@ let selectedOutputType = outputTypes[1]!
 function convert() {
 	console.log('Convert')
 
-	outputValue = convertFrom[selectedInputType](inputValue)
+	try
+	{
+		outputValue = convertFrom[selectedInputType](inputValue)
+		convertError = false
+	}
+	catch (error)
+	{
+		outputValue = error.message
+		convertError = true
+	}
 }
 </script>
 
@@ -96,7 +106,7 @@ function convert() {
 		<div class="space-y-4">
 			<label class="block h-64 space-y-2 flex flex-col">
 				<span class="text-gray-700">Output value</span>
-				<div class="form-textarea bg-gray-100 mt-1 block w-full p-2 rounded-md flex-1 whitespace-pre">
+				<div class="outputValue form-textarea bg-gray-100 mt-1 block w-full p-2 rounded-md flex-1 whitespace-pre" class:error={convertError}>
 					{outputValue}
 				</div>
 			</label>
@@ -118,6 +128,17 @@ function convert() {
 
 	&.btn-primary {
 		@apply bg-blue-500 hover:bg-blue-600;
+	}
+}
+
+.outputValue {
+	@apply
+		border
+		border-transparent
+		;
+
+	&.error {
+		@apply border-red-500 text-red-500;
 	}
 }
 </style>
