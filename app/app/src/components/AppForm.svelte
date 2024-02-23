@@ -33,7 +33,9 @@ const convertFrom = {
 
 function convertToEnv(input: string)
 {
-	return null
+	return Object.entries(input)
+		.map(([key, value]) => `${key}=${value}`)
+		.join('\n')
 }
 
 function convertToJson(input: string)
@@ -124,7 +126,12 @@ function swap()
 		<div class="space-y-4">
 			<div class="block space-y-2">
 				<span class="text-gray-700">Output type</span>
-				<InputSelect options={outputTypes} bind:selectedOption={$selectedOutputType} style={'bg-red-500'} disabled />
+				<InputSelect
+					style={'bg-red-500'}
+					options={outputTypes}
+					bind:selectedOption={$selectedOutputType}
+					on:change={convert}
+				/>
 			</div>
 			<p class="text-gray-500 italic">
 				Selected output type: {$selectedOutputType}
