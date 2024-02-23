@@ -117,6 +117,9 @@ $: canSwap =
 	convertTo[$selectedOutputType]?.swapTo !== undefined &&
 	convertTo[$selectedOutputType]?.swapTo !== $selectedInputType
 
+let canCopy: boolean = false
+$: canCopy = outputValue !== ''
+
 function swap()
 {
 	if (!canSwap)
@@ -140,6 +143,11 @@ function swap()
 
 function copy()
 {
+	if (!canCopy)
+	{
+		return
+	}
+
 	navigator.clipboard.writeText(outputValue)
 	if (outputValueElement)
 	{
@@ -239,7 +247,11 @@ function copy()
 				>
 					Swap
 				</button>
-				<button class="btn btn-primary" on:click|preventDefault={copy}>
+				<button
+					class="btn btn-primary"
+					disabled={!canCopy}
+					on:click|preventDefault={copy}
+				>
 					Copy
 				</button>
 			</div>
@@ -251,17 +263,21 @@ function copy()
 .btn {
 	@apply
 		bg-gray-400
-		hover:bg-gray-500
-		py-2 px-4 rounded-md text-white font-semibold;
+		enabled:hover:bg-gray-500
+		disabled:bg-gray-300
+		px-4
+		py-2
+		text-white
+		font-semibold
+		rounded-md
+		disabled:cursor-not-allowed
+		;
 
 	&.btn-primary {
-		@apply bg-blue-500 hover:bg-blue-600;
-	}
-
-	&[disabled] {
 		@apply
-			bg-gray-300
-			cursor-not-allowed
+			bg-blue-500
+			enabled:hover:bg-blue-600
+			disabled:bg-blue-300
 			;
 	}
 }
