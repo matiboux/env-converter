@@ -1,5 +1,6 @@
 <script lang="ts">
 import { parse as dotenvParse } from 'dotenv'
+import { persistentAtom } from '@nanostores/persistent'
 
 import InputSelect from '~/components/InputSelect.svelte'
 
@@ -32,8 +33,8 @@ const convertFrom = {
 
 const inputTypes = Object.keys(convertFrom)
 const outputTypes = ['.env file', 'JSON']
-let selectedInputType = inputTypes[0]!
-let selectedOutputType = outputTypes[1]!
+let selectedInputType = persistentAtom('selectedInputType', inputTypes[0]!)
+let selectedOutputType = persistentAtom('selectedOutputType', outputTypes[1]!)
 
 function convert()
 {
@@ -48,7 +49,7 @@ function convert()
 
 	try
 	{
-		outputValue = convertFrom[selectedInputType](inputValue)
+		outputValue = convertFrom[$selectedInputType](inputValue)
 		convertError = false
 	}
 	catch (error)
@@ -79,10 +80,10 @@ function clear()
 		<div class="space-y-4">
 			<div class="block space-y-2">
 				<span class="text-gray-700">Input type</span>
-				<InputSelect options={inputTypes} bind:selectedOption={selectedInputType} />
+				<InputSelect options={inputTypes} bind:selectedOption={$selectedInputType} />
 			</div>
 			<p class="text-gray-500 italic">
-				Selected input type: {selectedInputType}
+				Selected input type: {$selectedInputType}
 			</p>
 		</div>
 
@@ -90,10 +91,10 @@ function clear()
 		<div class="space-y-4">
 			<div class="block space-y-2">
 				<span class="text-gray-700">Output type</span>
-				<InputSelect options={outputTypes} bind:selectedOption={selectedOutputType} style={'bg-red-500'} disabled />
+				<InputSelect options={outputTypes} bind:selectedOption={$selectedOutputType} style={'bg-red-500'} disabled />
 			</div>
 			<p class="text-gray-500 italic">
-				Selected output type: {selectedOutputType}
+				Selected output type: {$selectedOutputType}
 			</p>
 		</div>
 
@@ -106,6 +107,7 @@ function clear()
 					rows="3"
 					placeholder="Enter some text"
 					bind:value={inputValue}
+					on:change|preventDefault={convert}
 				></textarea>
 			</label>
 
