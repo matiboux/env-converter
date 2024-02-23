@@ -17,7 +17,7 @@ const defaultInputValue = 'HOST=localhost\nPORT=80\nSECRET=secret'
 let inputValue = defaultInputValue
 let outputValue = ''
 let outputValueElement = null
-let convertError: boolean = false
+let convertError: string | null = null
 
 function convertFromEnv(input: string)
 {
@@ -85,7 +85,7 @@ function convert()
 	if (!inputValue)
 	{
 		outputValue = ''
-		convertError = false
+		convertError = null
 		return
 	}
 
@@ -93,12 +93,12 @@ function convert()
 	{
 		const value = convertFrom[$selectedInputType]?.convert(inputValue)
 		outputValue = convertTo[$selectedOutputType]?.convert(value)
-		convertError = false
+		convertError = null
 	}
 	catch (error)
 	{
-		outputValue = error.message
-		convertError = true
+		outputValue = ''
+		convertError = error.message
 	}
 }
 
@@ -106,7 +106,7 @@ function clear()
 {
 	inputValue = ''
 	outputValue = ''
-	convertError = false
+	convertError = null
 }
 
 let canSwap: boolean = false
@@ -212,14 +212,21 @@ function copy()
 			<label class="block space-y-2 flex flex-col">
 				<span class="text-gray-700">Output value</span>
 				<div class="h-64">
-					<textarea
-						class="outputValue form-textarea bg-gray-100 block w-full h-full p-2 rounded-md flex-1 resize-none text-gray-600"
-						class:error={convertError}
-						placeholder="Enter some text"
-						bind:this={outputValueElement}
-						bind:value={outputValue}
-						readonly
-					></textarea>
+					{#if convertError}
+						<textarea
+							class="outputValue form-textarea bg-gray-100 block w-full h-full p-2 rounded-md flex-1 resize-none text-gray-600 error"
+							value={convertError}
+							disabled
+						></textarea>
+					{:else}
+						<textarea
+							class="outputValue form-textarea bg-gray-100 block w-full h-full p-2 rounded-md flex-1 resize-none text-gray-600"
+							placeholder="Enter some text"
+							bind:this={outputValueElement}
+							bind:value={outputValue}
+							readonly
+						></textarea>
+					{/if}
 				</div>
 			</label>
 
