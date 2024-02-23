@@ -4,11 +4,11 @@ import AppForm from '~/components/AppForm.svelte'
 ---
 
 <Layout
-	bodyClass="bg-gray-100"
+	bodyClass="bg-gray-100 h-screen"
 >
 
-	<div class="flex justify-center items-center h-screen">
-		<div class="bg-white shadow-lg rounded-lg p-6 min-w-[800px]">
+	<div class="flex justify-center items-center min-h-full overflow-y p-8">
+		<div class="bg-white shadow-lg rounded-lg p-6 min-w-[800px] m-auto">
 			<h1 class="text-4xl font-bold mb-4">Env Converter</h1>
 			<p class="text-gray-600 mb-4">
 				Online conversion tool for env files.
