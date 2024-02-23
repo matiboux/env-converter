@@ -33,25 +33,38 @@ const convertFrom = {
 	'JSON': convertFromJson,
 }
 
-function convertToEnv(input: string)
+function convertToEnv(input: object)
 {
 	return Object.entries(input)
 		.map(([key, value]) => `${key}=${value}`)
 		.join('\n')
 }
 
-function convertToJson(input: string)
+function convertToJson(input: object)
 {
 	return JSON.stringify(input, null, 2)
+}
+
+function convertToAzure(input: object)
+{
+	return convertToJson(
+		Object.entries(input)
+			.map(([key, value]) => ({
+				'name': key,
+				'value': value,
+				'slotSetting': false,
+			}))
+	)
 }
 
 const convertTo = {
 	'.env file': convertToEnv,
 	'JSON': convertToJson,
+	'Azure': convertToAzure,
 }
 
 const inputTypes = Object.keys(convertFrom)
-const outputTypes = ['.env file', 'JSON']
+const outputTypes = Object.keys(convertTo)
 let selectedInputType = persistentAtom('selectedInputType', inputTypes[0]!)
 let selectedOutputType = persistentAtom('selectedOutputType', outputTypes[1]!)
 
