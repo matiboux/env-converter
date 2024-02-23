@@ -132,9 +132,6 @@ function copy()
 					on:change={convert}
 				/>
 			</div>
-			<p class="text-gray-500 italic">
-				Selected input type: {$selectedInputType}
-			</p>
 		</div>
 
 		<!-- Output type -->
@@ -148,9 +145,6 @@ function copy()
 					on:change={convert}
 				/>
 			</div>
-			<p class="text-gray-500 italic">
-				Selected output type: {$selectedOutputType}
-			</p>
 		</div>
 
 		<!-- Input value -->
