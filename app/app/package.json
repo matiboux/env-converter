@@ -29,7 +29,7 @@
     "@iconify-json/uil": "^1.1.8",
     "@iconify/tailwind": "^0.1.4",
     "@nanostores/persistent": "^0.9.1",
-    "astro": "^4.3.2",
+    "astro": "^4.4.4",
     "astro-icon": "^1.1.0",
     "dotenv": "^16.4.5",
     "nanostores": "^0.9.5",
