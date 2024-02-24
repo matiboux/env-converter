@@ -2,6 +2,9 @@
 import Base from '~/layouts/Base.astro'
 import type { Props as BaseProps } from '~/layouts/Base.astro'
 
+import { i18nFactory } from '~/i18n'
+const _ = i18nFactory(Astro.currentLocale as any)
+
 export interface Props extends Omit<BaseProps, 'title'>
 {
 	title?: BaseProps['title']
@@ -22,7 +25,7 @@ interface Site
 
 const site: Site = {
 	title: 'Env Converter',
-	description: 'Online conversion tool for env files.',
+	description: _('Online conversion tool for environment files.'),
 	author: 'Matiboux',
 	themeColor: '#ffffff',
 }
