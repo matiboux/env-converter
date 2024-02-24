@@ -5,14 +5,10 @@ const i18n =
 		{
 			codes: ['en', 'en-US'],
 			path: 'en',
-			label: 'English',
-			icon: '🇺🇸',
 		},
 		{
 			codes: ['fr', 'fr-FR'],
 			path: 'fr',
-			label: 'Français',
-			icon: '🇫🇷',
 		},
 	],
 	routing: {
@@ -25,8 +21,6 @@ const i18n =
 		| {
 			readonly codes: readonly string[],
 			readonly path: string,
-			readonly label?: string,
-			readonly icon?: string,
 		}
 	)[],
 	readonly routing: {
