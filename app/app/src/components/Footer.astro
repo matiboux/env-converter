@@ -1,0 +1,56 @@
+---
+export interface Props
+{
+	class?: string
+	style?: string
+}
+
+const githubRepositoryUrl = process.env.GITHUB_REPOSITORY_URL || null as string | null
+const githubSha = process.env.GITHUB_SHA || null as string | null
+const buildVersion = githubSha ? githubSha.slice(0, 7) : 'dev'
+---
+
+<footer
+	id="footer"
+	class={Astro.props.class}
+	style={Astro.props.style}
+>
+	<div>
+		<ul>
+			<li>
+				<span class="icon-[mdi--github] align-icon-inline"></span>
+				<a href={githubRepositoryUrl ?? '#'}>
+					Open-source repository
+				</a>
+				<small>(v. {buildVersion})</small>
+			</li>
+			<li>
+				<span class="icon-[mdi--fire] align-icon-inline"></span>
+				Powered by <b>Astro</b> and <b>GitHub Pages</b>
+			</li>
+		</ul>
+	</div>
+	<div>
+		<ul>
+			<li>
+				<span class="icon-[mdi--security-lock] align-icon-inline"></span>
+				No server-side data processing, no tracking
+			</li>
+			<li>
+				Made with love by <a href="https://matiboux.me/">Matiboux</a>.
+				<span class="icon-[mdi--heart] align-icon-inline text-red-500"></span>
+			</li>
+		</ul>
+	</div>
+</footer>
+
+<style>
+footer {
+	@apply
+		flex
+		flex-wrap
+		justify-evenly
+		items-start
+		;
+}
+</style>
