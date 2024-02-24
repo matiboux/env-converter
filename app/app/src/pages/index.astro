@@ -1,0 +1,33 @@
+---
+import Layout from '~/layouts/Layout.astro'
+import LocaleSwitch from '~/components/LocaleSwitch.astro'
+import AppForm from '~/components/AppForm.svelte'
+import Footer from '~/components/Footer.astro'
+
+import { i18nFactory } from '~/i18n'
+const _ = i18nFactory(Astro.currentLocale as any)
+---
+
+<Layout
+	bodyClass="bg-gray-100 h-screen"
+>
+
+	<div class="flex flex-col justify-center items-center min-h-full overflow-y gap-8 p-8 w-full max-w-[800px] mx-auto">
+		<div class="bg-white shadow-lg rounded-lg p-6 w-full space-y-4">
+			<div class="flex items-start justify-between">
+				<h1 class="text-4xl font-bold">
+					Env Converter
+				</h1>
+				<LocaleSwitch />
+			</div>
+			<p class="text-gray-600">
+				{_('Online conversion tool for environment files.')}
+			</p>
+
+			<AppForm class="home text-black group-hover:text-gray mt-4" locale={Astro.currentLocale} client:load />
+		</div>
+
+		<Footer class="w-full" />
+	</div>
+
+</Layout>

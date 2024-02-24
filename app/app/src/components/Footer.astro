@@ -1,0 +1,98 @@
+---
+import { i18nFactory } from '~/i18n'
+const _ = i18nFactory(Astro.currentLocale as any)
+
+export interface Props
+{
+	class?: string
+	style?: string
+}
+
+const githubRepositoryUrl = process.env.GITHUB_REPOSITORY_URL || null as string | null
+const githubSha = process.env.GITHUB_SHA || null as string | null
+const buildVersion = githubSha ? githubSha.slice(0, 7) : 'dev'
+---
+
+<footer
+	id="footer"
+	class={Astro.props.class}
+	style={Astro.props.style}
+>
+	<div>
+		<h3>
+			<span class="icon-[mdi--code-braces] align-icon-inline"></span>
+			{_('Open source project')}
+		</h3>
+		<p>
+			<span class="icon-[mdi--github] align-icon-inline"></span>
+			<Fragment set:html={_('See the source code on {0}', `<a href={${githubRepositoryUrl ?? '#'}}>GitHub</a>`)} />
+			<small>(v. {buildVersion})</small>
+		</p>
+		<p>
+			<span class="icon-[mdi--fire] align-icon-inline"></span>
+			<Fragment set:html={_('Built with {0}, served by {1}', '<a href="https://astro.build/">Astro</a>', '<a href="https://pages.github.com/">GitHub Pages</a>')} />
+		</p>
+		<p>
+			<span class="icon-[mdi--heart] align-icon-inline text-red-500"></span>
+			<Fragment set:html={_('Made with love by {0}', '<a href="https://matiboux.me/">Matiboux</a>')} />
+		</p>
+	</div>
+
+	<div>
+		<h3>
+			<span class="icon-[mdi--security-lock] align-icon-inline"></span>
+			{_('Data privacy')}
+		</h3>
+		<p>
+			<span class="icon-[mdi--server-network-off] align-icon-inline"></span>
+			{_('No data is collected or processed over the network or on any server.')}
+			{_('All data is processed locally in your browser, and stays on your own device.')}
+		</p>
+		<p>
+			<span class="icon-[mdi--cookie-off] align-icon-inline"></span>
+			{_('This website uses no cookies and does no tracking.')}
+		</p>
+	</div>
+</footer>
+
+<style>
+footer {
+	@apply
+		flex
+		flex-wrap
+		justify-around
+		items-start
+		;
+
+	> div {
+		@apply
+			max-w-[50%]
+			space-y-2
+			;
+
+		h3 {
+			@apply
+				text-lg
+				;
+		}
+
+		a {
+			@apply
+				text-blue-500
+				;
+
+			&:hover {
+				@apply
+					text-blue-700
+					;
+			}
+		}
+
+		b {
+			@apply
+				font-semibold
+				;
+		}
+	}
+}
+</style>
