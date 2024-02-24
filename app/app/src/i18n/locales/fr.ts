@@ -15,7 +15,7 @@ const locale =
 	'Azure': 'Azure',
 	'Input value': 'Valeur d\'entrée',
 	'Convert': 'Convertir',
-	'Clear': 'Effacer',
+	'Reset': 'Réinitialiser',
 	'Output value': 'Valeur de sortie',
 	'Swap': 'Échanger',
 	'Copy': 'Copier',

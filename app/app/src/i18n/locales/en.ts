@@ -13,7 +13,7 @@ const defaultLocale =
 	'Azure',
 	'Input value',
 	'Convert',
-	'Clear',
+	'Reset',
 	'Output value',
 	'Swap',
 	'Copy',

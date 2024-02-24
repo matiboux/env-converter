@@ -349,7 +349,7 @@ function copy()
 					{_('Convert')}
 				</button>
 				<button class="btn btn-secondary" on:click|preventDefault={reset}>
-					{_('Clear')}
+					{_('Reset')}
 				</button>
 			</div>
 		</div>
