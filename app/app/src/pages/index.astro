@@ -8,8 +8,8 @@ import Footer from '~/components/Footer.astro'
 	bodyClass="bg-gray-100 h-screen"
 >
 
-	<div class="flex flex-col justify-center items-center min-h-full overflow-y gap-8 p-8">
-		<div class="bg-white shadow-lg rounded-lg p-6 min-w-[800px]">
+	<div class="flex flex-col justify-center items-center min-h-full overflow-y gap-8 p-8 w-full max-w-[800px] mx-auto">
+		<div class="bg-white shadow-lg rounded-lg p-6 w-full">
 			<h1 class="text-4xl font-bold mb-4">Env Converter</h1>
 			<p class="text-gray-600 mb-4">
 				Online conversion tool for env files.
@@ -18,7 +18,7 @@ import Footer from '~/components/Footer.astro'
 			<AppForm class="home text-black group-hover:text-gray" client:load />
 		</div>
 
-		<Footer class="min-w-[800px]" />
+		<Footer class="w-full" />
 	</div>
 
 </Layout>
