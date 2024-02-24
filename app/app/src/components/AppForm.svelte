@@ -135,8 +135,8 @@ const outputTypes = Object.entries(convertTo).reduce((acc, [key, {label}]) =>
 		return acc
 	}, {} as Record<string, string>)
 
-let selectedInputType = inputTypes[0]!
-let selectedOutputType = persistentAtom<keyof typeof convertTo>('selectedOutputType', outputTypes[2]!)
+let selectedInputType = Object.keys(inputTypes)[0]!
+let selectedOutputType = persistentAtom<keyof typeof convertTo>('selectedOutputType', Object.keys(outputTypes)[2]!)
 
 onMount(() =>
 	{
