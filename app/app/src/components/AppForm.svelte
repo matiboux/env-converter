@@ -193,6 +193,17 @@ function convert()
 onMount(() =>
 	{
 		convert()
+
+		selectedInputType.subscribe(value =>
+			{
+				if (allowDefaultInputValue)
+				{
+					inputValue = getDefaultInputValue(value)
+				}
+
+				convert()
+			})
+
 	})
 
 let allowDefaultInputValue: boolean = true
@@ -218,16 +229,6 @@ function onChange()
 
 	convert()
 }
-
-selectedInputType.subscribe(value =>
-	{
-		if (allowDefaultInputValue)
-		{
-			inputValue = getDefaultInputValue(value)
-		}
-
-		convert()
-	})
 
 function reset()
 {
