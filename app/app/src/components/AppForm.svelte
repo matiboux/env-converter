@@ -1,6 +1,7 @@
 <script lang="ts">
 import { onMount } from 'svelte'
 import { parse as dotenvParse } from 'dotenv'
+import { parse as tomlParse } from 'toml'
 import { persistentAtom } from '@nanostores/persistent'
 
 import InputSelect from '~/components/InputSelect.svelte'
@@ -34,6 +35,11 @@ function convertFromJson(input: string)
 	return JSON.parse(input)
 }
 
+function convertFromToml(input: string)
+{
+	return tomlParse(input)
+}
+
 const convertFrom: Record<
 	string,
 	{
@@ -51,6 +57,11 @@ const convertFrom: Record<
 		label: _('JSON'),
 		convert: convertFromJson,
 		swapTo: 'json',
+	},
+	'toml': {
+		label: _('TOML'),
+		convert: convertFromToml,
+		swapTo: 'toml',
 	},
 }
 

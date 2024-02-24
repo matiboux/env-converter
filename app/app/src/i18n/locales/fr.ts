@@ -11,6 +11,7 @@ const locale =
 	'JSON': 'JSON',
 	'JSON (inline)': 'JSON (compacté)',
 	'JSON (formatted)': 'JSON (formaté)',
+	'TOML': 'TOML',
 	'Azure': 'Azure',
 	'Input value': 'Valeur d\'entrée',
 	'Convert': 'Convertir',

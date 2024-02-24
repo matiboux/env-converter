@@ -9,6 +9,7 @@ const defaultLocale =
 	'JSON',
 	'JSON (inline)',
 	'JSON (formatted)',
+	'TOML',
 	'Azure',
 	'Input value',
 	'Convert',
