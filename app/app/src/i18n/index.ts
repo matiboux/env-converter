@@ -1,4 +1,3 @@
-import getLocaleByPath from './getLocaleByPath'
 import getLocaleByUrl from './getLocaleByUrl'
 import getLocaleUrlList from './getLocaleUrlList'
 import getUrlWithoutLocale from './getUrlWithoutLocale'
@@ -11,7 +10,6 @@ export {
 	defaultLocale,
 	defaultLocaleKey,
 	i18nFactory,
-	getLocaleByPath,
 	getLocaleByUrl,
 	getUrlWithoutLocale,
 	getLocaleUrlList,
