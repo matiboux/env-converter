@@ -13,7 +13,7 @@ export {
 	style,
 }
 
-const defaultInputValue = 'HOST=localhost\nPORT=80\nSECRET=secret'
+const defaultInputValue = '# .env example to get you started\nHOST=localhost\nPORT=80\nSECRET=secret'
 let inputValue = defaultInputValue
 let outputValue = ''
 let outputValueElement = null
