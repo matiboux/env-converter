@@ -425,6 +425,10 @@ textarea {
 		border-gray-300
 		;
 
+	&.default {
+		@apply text-gray-600
+	}
+
 	&.error {
 		@apply border-red-600 text-red-600;
 	}
