@@ -30,7 +30,7 @@ const buildVersion = githubSha ? githubSha.slice(0, 7) : 'dev'
 		</p>
 		<p>
 			<span class="icon-[mdi--fire] align-icon-inline"></span>
-			<Fragment set:html={_('Built with {0}, served by {1}', '<b>Astro</b>', '<b>GitHub Pages</b>')} />
+			<Fragment set:html={_('Built with {0}, served by {1}', '<a href="https://astro.build/">Astro</a>', '<a href="https://pages.github.com/">GitHub Pages</a>')} />
 		</p>
 		<p>
 			<span class="icon-[mdi--heart] align-icon-inline text-red-500"></span>
