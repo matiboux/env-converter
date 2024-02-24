@@ -289,7 +289,7 @@ function copy()
 		;
 
 	&.error {
-		@apply border-red-500 text-red-500;
+		@apply border-red-600 text-red-600;
 	}
 }
 </style>
