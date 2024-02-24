@@ -3,7 +3,10 @@ import { getAbsoluteLocaleUrlList } from 'astro:i18n'
 import getLocaleByUrl from './getLocaleByUrl'
 import getUrlWithoutLocale from './getUrlWithoutLocale'
 
-function getLocaleUrlList(url: URL | string, excludeLocale?: string): { locale: string, url: string }[]
+function getLocaleUrlList(url: URL | string, excludeLocale?: string): {
+	locale: string,
+	url: string
+}[]
 {
 	const pathname = typeof url === 'string' ? url : url.pathname
 	const list =
