@@ -71,7 +71,6 @@ const convertFrom: Record<
 	'toml': {
 		label: _('TOML'),
 		convert: convertFromToml,
-		swapTo: 'toml',
 	},
 }
 
