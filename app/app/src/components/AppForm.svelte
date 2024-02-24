@@ -143,8 +143,15 @@ onMount(() =>
 		convert()
 	})
 
+let onInputConvertTimeout: number | undefined = undefined
+
 function convert()
 {
+	if (onInputConvertTimeout)
+	{
+		clearTimeout(onInputConvertTimeout)
+	}
+
 	if (!inputValue)
 	{
 		outputValue = ''
@@ -163,6 +170,24 @@ function convert()
 		outputValue = ''
 		convertError = error.message
 	}
+}
+
+function onInput()
+{
+	if (onInputConvertTimeout)
+	{
+		clearTimeout(onInputConvertTimeout)
+	}
+
+	onInputConvertTimeout = setTimeout(() =>
+		{
+			convert()
+		}, 400)
+}
+
+function onChange()
+{
+	convert()
 }
 
 function clear()
@@ -270,7 +295,8 @@ function copy()
 						class="form-textarea bg-gray-100 block w-full h-full p-2 rounded-md flex-1 resize-none"
 						placeholder="Enter some text"
 						bind:value={inputValue}
-						on:change|preventDefault={convert}
+						on:input|preventDefault={onInput}
+						on:change|preventDefault={onChange}
 					></textarea>
 				</div>
 			</label>
