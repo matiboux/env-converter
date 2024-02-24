@@ -298,7 +298,7 @@ function copy()
 	<!-- Two columns for input & output -->
 	<div class="grid grid-cols-2 gap-4">
 		<!-- Input type -->
-		<div class="space-y-4">
+		<div class="space-y-4 col-span-2 sm:col-auto">
 			<div class="block space-y-2">
 				<span class="text-gray-700">
 					{_('Input type')}
@@ -312,7 +312,7 @@ function copy()
 		</div>
 
 		<!-- Output type -->
-		<div class="space-y-4">
+		<div class="space-y-4 col-span-2 sm:col-auto row-start-3 sm:row-start-auto">
 			<div class="block space-y-2">
 				<span class="text-gray-700">
 					{_('Output type')}
@@ -327,12 +327,12 @@ function copy()
 		</div>
 
 		<!-- Input value -->
-		<div class="space-y-4">
+		<div class="space-y-4 col-span-2 sm:col-auto">
 			<label class="block space-y-2 flex flex-col">
 				<span class="text-gray-700">
 					{_('Input value')}
 				</span>
-				<div class="h-64">
+				<div class="h-48 sm:h-64 lg:h-80 xl:h-96">
 					<textarea
 						class="form-textarea bg-gray-100 block w-full h-full p-2 rounded-md flex-1 resize-none"
 						class:default={allowDefaultInputValue}
@@ -344,7 +344,7 @@ function copy()
 				</div>
 			</label>
 
-			<div class="flex justify-end space-x-2 pr-4">
+			<div class="flex justify-start sm:justify-end space-x-2 sm:pr-4">
 				<button class="btn btn-primary" on:click|preventDefault={convert}>
 					{_('Convert')}
 				</button>
@@ -355,12 +355,12 @@ function copy()
 		</div>
 
 		<!-- Output value -->
-		<div class="space-y-4">
+		<div class="space-y-4 col-span-2 sm:col-auto">
 			<label class="block space-y-2 flex flex-col">
 				<span class="text-gray-700">
 					{_('Output value')}
 				</span>
-				<div class="h-64">
+				<div class="h-48 sm:h-64 lg:h-80 xl:h-96">
 					{#if convertError}
 						<textarea
 							class="outputValue form-textarea bg-gray-100 block w-full h-full p-2 rounded-md flex-1 resize-none text-gray-600 error"
@@ -379,7 +379,7 @@ function copy()
 				</div>
 			</label>
 
-			<div class="flex justify-start space-x-2 pl-4">
+			<div class="flex justify-start space-x-2 sm:pl-4">
 				<button
 					class="btn btn-secondary"
 					disabled={!canSwap}

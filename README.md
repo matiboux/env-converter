@@ -1,6 +1,6 @@
 # Env Converter
 
-Online conversion tool for env files.
+Online conversion tool for environment files.
 
 
 ## License
