@@ -221,7 +221,7 @@ function onChange()
 
 selectedInputType.subscribe(value =>
 	{
-		if (!inputValue || allowDefaultInputValue)
+		if (allowDefaultInputValue)
 		{
 			inputValue = getDefaultInputValue(value)
 		}
@@ -229,11 +229,14 @@ selectedInputType.subscribe(value =>
 		convert()
 	})
 
-function clear()
+function reset()
 {
-	inputValue = ''
+	allowDefaultInputValue = true
+	inputValue = getDefaultInputValue($selectedInputType)
 	outputValue = ''
 	convertError = null
+
+	convert()
 }
 
 let canSwap: boolean = false
@@ -345,7 +348,7 @@ function copy()
 				<button class="btn btn-primary" on:click|preventDefault={convert}>
 					{_('Convert')}
 				</button>
-				<button class="btn btn-secondary" on:click|preventDefault={clear}>
+				<button class="btn btn-secondary" on:click|preventDefault={reset}>
 					{_('Clear')}
 				</button>
 			</div>
