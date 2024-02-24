@@ -72,7 +72,7 @@ const convertTo: Record<string, { convert: (input: object) => string, swapTo?: k
 
 const inputTypes: Array<keyof typeof convertFrom> = Object.keys(convertFrom)
 const outputTypes: Array<keyof typeof convertTo> = Object.keys(convertTo)
-let selectedInputType = persistentAtom<keyof typeof convertFrom>('selectedInputType', inputTypes[0]!)
+let selectedInputType = inputTypes[0]!
 let selectedOutputType = persistentAtom<keyof typeof convertTo>('selectedOutputType', outputTypes[2]!)
 
 onMount(() =>
@@ -91,7 +91,7 @@ function convert()
 
 	try
 	{
-		const value = convertFrom[$selectedInputType]?.convert(inputValue)
+		const value = convertFrom[selectedInputType]?.convert(inputValue)
 		outputValue = convertTo[$selectedOutputType]?.convert(value)
 		convertError = null
 	}
@@ -112,10 +112,10 @@ function clear()
 let canSwap: boolean = false
 $: canSwap =
 	convertError === null &&
-	convertFrom[$selectedInputType]?.swapTo !== undefined &&
-	convertFrom[$selectedInputType]?.swapTo !== $selectedOutputType &&
+	convertFrom[selectedInputType]?.swapTo !== undefined &&
+	convertFrom[selectedInputType]?.swapTo !== $selectedOutputType &&
 	convertTo[$selectedOutputType]?.swapTo !== undefined &&
-	convertTo[$selectedOutputType]?.swapTo !== $selectedInputType
+	convertTo[$selectedOutputType]?.swapTo !== selectedInputType
 
 let canCopy: boolean = false
 $: canCopy = outputValue !== ''
@@ -128,8 +128,8 @@ function swap()
 	}
 
 	// Swap selected input & output types
-	const currentInputType = $selectedInputType
-	selectedInputType.set(convertTo[$selectedOutputType].swapTo!)
+	const currentInputType = selectedInputType
+	selectedInputType = convertTo[$selectedOutputType].swapTo!
 	selectedOutputType.set(convertFrom[currentInputType].swapTo!)
 
 	// Swap input & output values
@@ -173,7 +173,7 @@ function copy()
 				<span class="text-gray-700">Input type</span>
 				<InputSelect
 					options={inputTypes}
-					bind:selectedOption={$selectedInputType}
+					bind:selectedOption={selectedInputType}
 					on:change={convert}
 				/>
 			</div>
