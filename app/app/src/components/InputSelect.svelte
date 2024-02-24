@@ -2,7 +2,7 @@
 // Props
 let userClass: string | undefined = undefined
 let style: string | undefined = undefined
-let options: string[] = []
+let options: Array<string> | Record<string, string> = []
 let selectedOption: string = ''
 let disabled: boolean = false
 export {
@@ -13,14 +13,22 @@ export {
 	disabled,
 }
 
-if (!selectedOption && options.length > 0)
+if (Array.isArray(options))
+{
+	options = options.reduce((acc, option) => {
+		acc[option] = option
+		return acc
+	}, {} as Record<string, string>)
+}
+
+if (!selectedOption && Object.keys(options).length > 0)
 {
 	selectedOption = options[0]!
 }
 </script>
 
 <div class={[userClass, 'flex flex-col space-y-2'].join(' ')} style={style}>
-	{#each options as option}
+	{#each Object.entries(options) as [option, label]}
 		<label class="inline-flex items-center">
 			<input
 				type="radio"
@@ -30,7 +38,7 @@ if (!selectedOption && options.length > 0)
 				disabled={disabled}
 				on:change|preventDefault
 			/>
-			<span class="ml-2">{option}</span>
+			<span class="ml-2">{label}</span>
 		</label>
 	{/each}
 </div>

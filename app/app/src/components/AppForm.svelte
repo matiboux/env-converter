@@ -29,9 +29,24 @@ function convertFromJson(input: string)
 	return JSON.parse(input)
 }
 
-const convertFrom: Record<string, { convert: (input: string) => object, swapTo?: keyof typeof convertTo }> = {
-	'.env file': { convert: convertFromEnv, swapTo: '.env file' },
-	'JSON': { convert: convertFromJson, swapTo: 'JSON (formatted)' },
+const convertFrom: Record<
+	string,
+	{
+		label: string,
+		convert: (input: string) => object,
+		swapTo?: keyof typeof convertTo,
+	}
+> = {
+	'env': {
+		label: '.env file',
+		convert: convertFromEnv,
+		swapTo: 'env',
+	},
+	'json': {
+		label: 'JSON',
+		convert: convertFromJson,
+		swapTo: 'json',
+	},
 }
 
 function convertToEnv(input: object)
@@ -63,15 +78,47 @@ function convertToAzure(input: object)
 	)
 }
 
-const convertTo: Record<string, { convert: (input: object) => string, swapTo?: keyof typeof convertTo }> = {
-	'.env file': { convert: convertToEnv, swapTo: '.env file' },
-	'JSON (inline)': { convert: convertToJsonInline, swapTo: 'JSON' },
-	'JSON (formatted)': { convert: convertToJson, swapTo: 'JSON' },
-	'Azure': { convert: convertToAzure },
+const convertTo: Record<
+	string,
+	{
+		label: string,
+		convert: (input: object) => string,
+		swapTo?: keyof typeof convertFrom,
+	}
+> = {
+	'env': {
+		label: '.env file',
+		convert: convertToEnv,
+		swapTo: 'env',
+	},
+	'json_inline': {
+		label: 'JSON (inline)',
+		convert: convertToJsonInline,
+		swapTo: 'json',
+	},
+	'json': {
+		label: 'JSON (formatted)',
+		convert: convertToJson,
+		swapTo: 'json',
+	},
+	'azure': {
+		label: 'Azure',
+		convert: convertToAzure,
+	},
 }
 
-const inputTypes: Array<keyof typeof convertFrom> = Object.keys(convertFrom)
-const outputTypes: Array<keyof typeof convertTo> = Object.keys(convertTo)
+const inputTypes = Object.entries(convertFrom).reduce((acc, [key, {label}]) =>
+	{
+		acc[key] = label
+		return acc
+	}, {} as Record<string, string>)
+
+const outputTypes = Object.entries(convertTo).reduce((acc, [key, {label}]) =>
+	{
+		acc[key] = label
+		return acc
+	}, {} as Record<string, string>)
+
 let selectedInputType = inputTypes[0]!
 let selectedOutputType = persistentAtom<keyof typeof convertTo>('selectedOutputType', outputTypes[2]!)
 
