@@ -16,31 +16,42 @@ const buildVersion = githubSha ? githubSha.slice(0, 7) : 'dev'
 	style={Astro.props.style}
 >
 	<div>
-		<ul>
-			<li>
-				<span class="icon-[mdi--github] align-icon-inline"></span>
-				<a href={githubRepositoryUrl ?? '#'}>
-					Open-source repository
-				</a>
-				<small>(v. {buildVersion})</small>
-			</li>
-			<li>
-				<span class="icon-[mdi--fire] align-icon-inline"></span>
-				Powered by <b>Astro</b> and <b>GitHub Pages</b>
-			</li>
-		</ul>
+		<h3>
+			<span class="icon-[mdi--code-braces] align-icon-inline"></span>
+			Open source project
+		</h3>
+		<p>
+			<span class="icon-[mdi--github] align-icon-inline"></span>
+			See the source code on
+			<a href={githubRepositoryUrl ?? '#'}>
+				GitHub
+			</a>
+			<small>(v. {buildVersion})</small>
+		</p>
+		<p>
+			<span class="icon-[mdi--fire] align-icon-inline"></span>
+			Built with <b>Astro</b>, served by <b>GitHub Pages</b>
+		</p>
+		<p>
+			<span class="icon-[mdi--heart] align-icon-inline text-red-500"></span>
+			Made with love by <a href="https://matiboux.me/">Matiboux</a>
+		</p>
 	</div>
+
 	<div>
-		<ul>
-			<li>
-				<span class="icon-[mdi--security-lock] align-icon-inline"></span>
-				No server-side data processing, no tracking
-			</li>
-			<li>
-				Made with love by <a href="https://matiboux.me/">Matiboux</a>.
-				<span class="icon-[mdi--heart] align-icon-inline text-red-500"></span>
-			</li>
-		</ul>
+		<h3>
+			<span class="icon-[mdi--security-lock] align-icon-inline"></span>
+			Data privacy
+		</h3>
+		<p>
+			<span class="icon-[mdi--server-network-off] align-icon-inline"></span>
+			No data is collected or processed over the network or on any server.
+			All data is processed locally in your browser, and stays on your own device.
+		</p>
+		<p>
+			<span class="icon-[mdi--cookie-off] align-icon-inline"></span>
+			This website uses no cookies and does no tracking.
+		</p>
 	</div>
 </footer>
 
@@ -49,8 +60,39 @@ footer {
 	@apply
 		flex
 		flex-wrap
-		justify-evenly
+		justify-around
 		items-start
 		;
+
+	> div {
+		@apply
+			max-w-[50%]
+			space-y-2
+			;
+
+		h3 {
+			@apply
+				text-lg
+				;
+		}
+
+		a {
+			@apply
+				text-blue-500
+				;
+
+			&:hover {
+				@apply
+					text-blue-700
+					;
+			}
+		}
+
+		b {
+			@apply
+				font-semibold
+				;
+		}
+	}
 }
 </style>
