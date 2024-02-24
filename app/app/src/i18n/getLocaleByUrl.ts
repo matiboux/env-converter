@@ -11,6 +11,11 @@ function getLocaleByUrl(url: URL | string, fallback: boolean = true): string | u
 	const urlParts = typeof url === 'string' ? url.split('/') : url.pathname.split('/')
 	for (const part of urlParts)
 	{
+		if (!part)
+		{
+			continue
+		}
+
 		const locale = getLocaleByPath(part)
 		if (locale)
 		{
