@@ -2,8 +2,14 @@ const i18n =
 {
 	defaultLocale: 'en',
 	locales: [
-		'en',
-		'fr',
+		{
+			codes: ['en', 'en-US'],
+			path: 'en',
+		},
+		{
+			codes: ['fr', 'fr-FR'],
+			path: 'fr',
+		},
 	],
 	routing: {
 		prefixDefaultLocale: false,
