@@ -8,10 +8,15 @@ import InputSelect from '~/components/InputSelect.svelte'
 // Props
 let userClass: string | undefined = undefined
 let style: string | undefined = undefined
+let locale: string | undefined = undefined
 export {
 	userClass as class,
 	style,
+	locale,
 }
+
+import { i18nFactory } from '~/i18n'
+const _ = i18nFactory(locale as any)
 
 const defaultInputValue = '# .env example to get you started\nHOST=localhost\nPORT=80\nSECRET=secret'
 let inputValue = defaultInputValue
@@ -38,12 +43,12 @@ const convertFrom: Record<
 	}
 > = {
 	'env': {
-		label: '.env file',
+		label: _('.env file'),
 		convert: convertFromEnv,
 		swapTo: 'env',
 	},
 	'json': {
-		label: 'JSON',
+		label: _('JSON'),
 		convert: convertFromJson,
 		swapTo: 'json',
 	},
@@ -87,22 +92,22 @@ const convertTo: Record<
 	}
 > = {
 	'env': {
-		label: '.env file',
+		label: _('.env file'),
 		convert: convertToEnv,
 		swapTo: 'env',
 	},
 	'json_inline': {
-		label: 'JSON (inline)',
+		label: _('JSON (inline)'),
 		convert: convertToJsonInline,
 		swapTo: 'json',
 	},
 	'json': {
-		label: 'JSON (formatted)',
+		label: _('JSON (formatted)'),
 		convert: convertToJson,
 		swapTo: 'json',
 	},
 	'azure': {
-		label: 'Azure',
+		label: _('Azure'),
 		convert: convertToAzure,
 	},
 }
@@ -217,7 +222,9 @@ function copy()
 		<!-- Input type -->
 		<div class="space-y-4">
 			<div class="block space-y-2">
-				<span class="text-gray-700">Input type</span>
+				<span class="text-gray-700">
+					{_('Input type')}
+				</span>
 				<InputSelect
 					options={inputTypes}
 					bind:selectedOption={selectedInputType}
@@ -229,7 +236,9 @@ function copy()
 		<!-- Output type -->
 		<div class="space-y-4">
 			<div class="block space-y-2">
-				<span class="text-gray-700">Output type</span>
+				<span class="text-gray-700">
+					{_('Output type')}
+				</span>
 				<InputSelect
 					style={'bg-red-500'}
 					options={outputTypes}
@@ -242,7 +251,9 @@ function copy()
 		<!-- Input value -->
 		<div class="space-y-4">
 			<label class="block space-y-2 flex flex-col">
-				<span class="text-gray-700">Input value</span>
+				<span class="text-gray-700">
+					{_('Input value')}
+				</span>
 				<div class="h-64">
 					<textarea
 						class="form-textarea bg-gray-100 block w-full h-full p-2 rounded-md flex-1 resize-none"
@@ -255,10 +266,10 @@ function copy()
 
 			<div class="flex justify-end space-x-2 pr-4">
 				<button class="btn btn-primary" on:click|preventDefault={convert}>
-					Convert
+					{_('Convert')}
 				</button>
 				<button class="btn btn-secondary" on:click|preventDefault={clear}>
-					Clear
+					{_('Clear')}
 				</button>
 			</div>
 		</div>
@@ -266,7 +277,9 @@ function copy()
 		<!-- Output value -->
 		<div class="space-y-4">
 			<label class="block space-y-2 flex flex-col">
-				<span class="text-gray-700">Output value</span>
+				<span class="text-gray-700">
+					{_('Output value')}
+				</span>
 				<div class="h-64">
 					{#if convertError}
 						<textarea
@@ -292,14 +305,14 @@ function copy()
 					disabled={!canSwap}
 					on:click|preventDefault={swap}
 				>
-					Swap
+					{_('Swap')}
 				</button>
 				<button
 					class="btn btn-primary"
 					disabled={!canCopy}
 					on:click|preventDefault={copy}
 				>
-					Copy
+					{_('Copy')}
 				</button>
 			</div>
 		</div>

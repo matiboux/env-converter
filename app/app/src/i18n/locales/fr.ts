@@ -2,6 +2,23 @@ import type { I18n, Diff } from '../type'
 
 const locale =
 {
+	// Index
+	'Online conversion tool for environment files.': 'Outil de conversion en ligne pour les fichiers d\'environnement.',
+	// AppForm
+	'Input type': 'Type d\'entrée',
+	'Output type': 'Type de sortie',
+	'.env file': 'Fichier .env',
+	'JSON': 'JSON',
+	'JSON (inline)': 'JSON (compacté)',
+	'JSON (formatted)': 'JSON (formaté)',
+	'Azure': 'Azure',
+	'Input value': 'Valeur d\'entrée',
+	'Convert': 'Convertir',
+	'Clear': 'Effacer',
+	'Output value': 'Valeur de sortie',
+	'Swap': 'Échanger',
+	'Copy': 'Copier',
+	// Footer
 	'Open source project': 'Projet open source',
 	'See the source code on {0}': 'Voir le code source sur {0}',
 	'Built with {0}, served by {1}': 'Construit avec {0}, servi par {1}',

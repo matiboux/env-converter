@@ -1,5 +1,21 @@
 const defaultLocale =
 [
+	// Index
+	'Online conversion tool for environment files.',
+	// AppForm
+	'Input type',
+	'Output type',
+	'.env file',
+	'JSON',
+	'JSON (inline)',
+	'JSON (formatted)',
+	'Azure',
+	'Input value',
+	'Convert',
+	'Clear',
+	'Output value',
+	'Swap',
+	'Copy',
 	// Footer
 	'Open source project',
 	'See the source code on {0}',
