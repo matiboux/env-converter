@@ -19,11 +19,21 @@ export {
 import { i18nFactory } from '~/i18n'
 const _ = i18nFactory(locale as any)
 
-const defaultInputValue = '# .env example to get you started\nHOST=localhost\nPORT=80\nSECRET=secret'
-let inputValue = defaultInputValue
+let inputValue = ''
 let outputValue = ''
 let outputValueElement = null
 let convertError: string | null = null
+
+const defaultInputValues = {
+	'env': '# .env example to get you started\nHOST=localhost\nPORT=80\nSECRET=secret',
+	'json': '{\n  "HOST": "localhost",\n  "PORT": 80,\n  "SECRET": "secret"\n}',
+	'toml': '# TOML example to get you started\nHOST = "localhost"\nPORT = 80\nSECRET = "secret"',
+}
+
+function getDefaultInputValue(inputType: string)
+{
+	return defaultInputValues[inputType]
+}
 
 function convertFromEnv(input: string)
 {
@@ -135,13 +145,8 @@ const outputTypes = Object.entries(convertTo).reduce((acc, [key, {label}]) =>
 		return acc
 	}, {} as Record<string, string>)
 
-let selectedInputType = Object.keys(inputTypes)[0]!
+let selectedInputType = persistentAtom<keyof typeof convertFrom>('selectedInputType', Object.keys(inputTypes)[0]!)
 let selectedOutputType = persistentAtom<keyof typeof convertTo>('selectedOutputType', Object.keys(outputTypes)[2]!)
-
-onMount(() =>
-	{
-		convert()
-	})
 
 let onInputConvertTimeout: number | undefined = undefined
 
@@ -161,7 +166,7 @@ function convert()
 
 	try
 	{
-		const value = convertFrom[selectedInputType]?.convert(inputValue)
+		const value = convertFrom[$selectedInputType]?.convert(inputValue)
 		outputValue = convertTo[$selectedOutputType]?.convert(value)
 		convertError = null
 	}
@@ -172,12 +177,21 @@ function convert()
 	}
 }
 
+onMount(() =>
+	{
+		convert()
+	})
+
+let allowDefaultInputValue: boolean = true
+
 function onInput()
 {
 	if (onInputConvertTimeout)
 	{
 		clearTimeout(onInputConvertTimeout)
 	}
+
+	allowDefaultInputValue = false
 
 	onInputConvertTimeout = setTimeout(() =>
 		{
@@ -187,8 +201,20 @@ function onInput()
 
 function onChange()
 {
+	allowDefaultInputValue = false
+
 	convert()
 }
+
+selectedInputType.subscribe(value =>
+	{
+		if (!inputValue || allowDefaultInputValue)
+		{
+			inputValue = getDefaultInputValue(value)
+		}
+
+		convert()
+	})
 
 function clear()
 {
@@ -200,10 +226,10 @@ function clear()
 let canSwap: boolean = false
 $: canSwap =
 	convertError === null &&
-	convertFrom[selectedInputType]?.swapTo !== undefined &&
-	convertFrom[selectedInputType]?.swapTo !== $selectedOutputType &&
+	convertFrom[$selectedInputType]?.swapTo !== undefined &&
+	convertFrom[$selectedInputType]?.swapTo !== $selectedOutputType &&
 	convertTo[$selectedOutputType]?.swapTo !== undefined &&
-	convertTo[$selectedOutputType]?.swapTo !== selectedInputType
+	convertTo[$selectedOutputType]?.swapTo !== $selectedInputType
 
 let canCopy: boolean = false
 $: canCopy = outputValue !== ''
@@ -216,8 +242,8 @@ function swap()
 	}
 
 	// Swap selected input & output types
-	const currentInputType = selectedInputType
-	selectedInputType = convertTo[$selectedOutputType].swapTo!
+	const currentInputType = $selectedInputType
+	selectedInputType.set(convertTo[$selectedOutputType].swapTo!)
 	selectedOutputType.set(convertFrom[currentInputType].swapTo!)
 
 	// Swap input & output values
@@ -263,7 +289,7 @@ function copy()
 				</span>
 				<InputSelect
 					options={inputTypes}
-					bind:selectedOption={selectedInputType}
+					bind:selectedOption={$selectedInputType}
 					on:change={convert}
 				/>
 			</div>
