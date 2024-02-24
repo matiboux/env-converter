@@ -1,4 +1,4 @@
-import { getLocaleByPath } from 'astro:i18n'
+import getLocaleByPath from './getLocaleByPath'
 
 function getUrlWithoutLocale(url: URL | string): string
 {
