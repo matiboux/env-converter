@@ -319,6 +319,7 @@ function copy()
 				<div class="h-64">
 					<textarea
 						class="form-textarea bg-gray-100 block w-full h-full p-2 rounded-md flex-1 resize-none"
+						class:default={allowDefaultInputValue}
 						placeholder="Enter some text"
 						bind:value={inputValue}
 						on:input|preventDefault={onInput}
@@ -405,14 +406,15 @@ function copy()
 	}
 }
 
-.outputValue {
+textarea {
 	@apply
 		border
-		border-transparent
+		border-gray-300
 		;
 
 	&.error {
 		@apply border-red-600 text-red-600;
 	}
 }
+
 </style>
