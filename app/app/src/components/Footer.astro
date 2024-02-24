@@ -25,7 +25,7 @@ const buildVersion = githubSha ? githubSha.slice(0, 7) : 'dev'
 		</h3>
 		<p>
 			<span class="icon-[mdi--github] align-icon-inline"></span>
-			See the source code on
+			{_('See the source code on')}
 			<a href={githubRepositoryUrl ?? '#'}>
 				GitHub
 			</a>
@@ -33,27 +33,27 @@ const buildVersion = githubSha ? githubSha.slice(0, 7) : 'dev'
 		</p>
 		<p>
 			<span class="icon-[mdi--fire] align-icon-inline"></span>
-			Built with <b>Astro</b>, served by <b>GitHub Pages</b>
+			{_('Built with')} <b>Astro</b>, {_('served by')} <b>GitHub Pages</b>
 		</p>
 		<p>
 			<span class="icon-[mdi--heart] align-icon-inline text-red-500"></span>
-			Made with love by <a href="https://matiboux.me/">Matiboux</a>
+			{_('Made with love by')} <a href="https://matiboux.me/">Matiboux</a>
 		</p>
 	</div>
 
 	<div>
 		<h3>
 			<span class="icon-[mdi--security-lock] align-icon-inline"></span>
-			Data privacy
+			{_('Data privacy')}
 		</h3>
 		<p>
 			<span class="icon-[mdi--server-network-off] align-icon-inline"></span>
-			No data is collected or processed over the network or on any server.
-			All data is processed locally in your browser, and stays on your own device.
+			{_('No data is collected or processed over the network or on any server.')}
+			{_('All data is processed locally in your browser, and stays on your own device.')}
 		</p>
 		<p>
 			<span class="icon-[mdi--cookie-off] align-icon-inline"></span>
-			This website uses no cookies and does no tracking.
+			{_('This website uses no cookies and does no tracking.')}
 		</p>
 	</div>
 </footer>
