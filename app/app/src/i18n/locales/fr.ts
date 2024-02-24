@@ -2,7 +2,7 @@ import type { I18n, Diff } from '../type'
 
 const locale =
 {
-	'Hello, world!': 'Bonjour, monde !',
+	'Open source project': 'Projet open source',
 } as const
 
 // Static type check

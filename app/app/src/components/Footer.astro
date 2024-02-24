@@ -1,4 +1,7 @@
 ---
+import { i18nFactory } from '~/i18n'
+const _ = i18nFactory(Astro.currentLocale as any)
+
 export interface Props
 {
 	class?: string
@@ -18,7 +21,7 @@ const buildVersion = githubSha ? githubSha.slice(0, 7) : 'dev'
 	<div>
 		<h3>
 			<span class="icon-[mdi--code-braces] align-icon-inline"></span>
-			Open source project
+			{_('Open source project')}
 		</h3>
 		<p>
 			<span class="icon-[mdi--github] align-icon-inline"></span>

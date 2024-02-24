@@ -1,6 +1,7 @@
 const defaultLocale =
 [
-	'Hello, world!',
+	// Footer
+	'Open source project',
 ] as const
 
 type Keys = typeof defaultLocale[number]
