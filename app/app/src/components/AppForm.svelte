@@ -332,7 +332,7 @@ function copy()
 				<span class="text-gray-700">
 					{_('Input value')}
 				</span>
-				<div class="h-64">
+				<div class="h-48 sm:h-64 lg:h-80 xl:h-96">
 					<textarea
 						class="form-textarea bg-gray-100 block w-full h-full p-2 rounded-md flex-1 resize-none"
 						class:default={allowDefaultInputValue}
@@ -360,7 +360,7 @@ function copy()
 				<span class="text-gray-700">
 					{_('Output value')}
 				</span>
-				<div class="h-64">
+				<div class="h-48 sm:h-64 lg:h-80 xl:h-96">
 					{#if convertError}
 						<textarea
 							class="outputValue form-textarea bg-gray-100 block w-full h-full p-2 rounded-md flex-1 resize-none text-gray-600 error"
