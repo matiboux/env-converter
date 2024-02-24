@@ -78,7 +78,15 @@ const convertFrom: Record<
 function convertToEnv(input: object)
 {
 	return Object.entries(input)
-		.map(([key, value]) => `${key}=${value.match(/\s/) ? `"${value}"` : value}`)
+		.map(([key, value]) =>
+			{
+				if (typeof value === 'string' && value.match(/\s/))
+				{
+					return `${key}="${value}"`
+				}
+
+				return `${key}=${value}`
+			})
 		.join('\n')
 }
 
