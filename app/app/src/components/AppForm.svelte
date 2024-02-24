@@ -80,6 +80,11 @@ function convertToEnv(input: object)
 	return Object.entries(input)
 		.map(([key, value]) =>
 			{
+				if (typeof value === 'object')
+				{
+					return `${key}="${JSON.stringify(value).replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"`
+				}
+
 				if (typeof value === 'string' && value.match(/\s/))
 				{
 					return `${key}="${value}"`
@@ -106,7 +111,7 @@ function convertToAzure(input: object)
 		Object.entries(input)
 			.map(([key, value]) => ({
 				'name': key,
-				'value': value,
+				'value': typeof value === 'object' ? JSON.stringify(value) : value,
 				'slotSetting': false,
 			}))
 	)
