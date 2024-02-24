@@ -5,14 +5,17 @@ function getUrlWithoutLocale(url: URL | string): string
 	const urlPathnames = []
 	const urlParts = typeof url === 'string' ? url.split('/') : url.pathname.split('/')
 
-	let i = 0
+	let i = !urlParts[0] ? 1 : 0
 	while (i < urlParts.length)
 	{
-		const locale = getLocaleByPath(urlParts[i] as string)
-		if (locale)
+		if (urlParts[i])
 		{
-			i++
-			continue
+			const locale = getLocaleByPath(urlParts[i] as string)
+			if (locale)
+			{
+				i++
+				continue
+			}
 		}
 
 		urlPathnames.push(urlParts[i])
@@ -24,7 +27,7 @@ function getUrlWithoutLocale(url: URL | string): string
 		i++
 	}
 
-	return urlPathnames.join('/')
+	return '/' + urlPathnames.join('/')
 }
 
 export default getUrlWithoutLocale
