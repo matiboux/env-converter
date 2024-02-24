@@ -25,19 +25,16 @@ const buildVersion = githubSha ? githubSha.slice(0, 7) : 'dev'
 		</h3>
 		<p>
 			<span class="icon-[mdi--github] align-icon-inline"></span>
-			{_('See the source code on')}
-			<a href={githubRepositoryUrl ?? '#'}>
-				GitHub
-			</a>
+			<Fragment set:html={_('See the source code on {0}', `<a href={${githubRepositoryUrl ?? '#'}}>GitHub</a>`)} />
 			<small>(v. {buildVersion})</small>
 		</p>
 		<p>
 			<span class="icon-[mdi--fire] align-icon-inline"></span>
-			{_('Built with')} <b>Astro</b>, {_('served by')} <b>GitHub Pages</b>
+			<Fragment set:html={_('Built with {0}, served by {1}', '<b>Astro</b>', '<b>GitHub Pages</b>')} />
 		</p>
 		<p>
 			<span class="icon-[mdi--heart] align-icon-inline text-red-500"></span>
-			{_('Made with love by')} <a href="https://matiboux.me/">Matiboux</a>
+			<Fragment set:html={_('Made with love by {0}', '<a href="https://matiboux.me/">Matiboux</a>')} />
 		</p>
 	</div>
 
