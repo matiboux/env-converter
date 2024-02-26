@@ -5,4 +5,6 @@ Online conversion tool for environment files.
 
 ## License
 
-Copyright (c) 2024 Mathieu Guérin ([matiboux.me](https://matiboux.me))
+[MIT License](LICENSE)
+
+Copyright (c) 2024 Matiboux ([matiboux.me](https://matiboux.me))
