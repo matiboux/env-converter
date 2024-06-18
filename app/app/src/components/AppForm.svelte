@@ -198,9 +198,8 @@ onMount(() =>
 				if (allowDefaultInputValue)
 				{
 					inputValue = getDefaultInputValue(value)
+					convert()
 				}
-
-				convert()
 			})
 
 	})
