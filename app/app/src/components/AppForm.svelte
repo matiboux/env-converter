@@ -81,11 +81,15 @@ function convertToEnv(input: object)
 			{
 				if (typeof value === 'object')
 				{
-					return `${key}="${JSON.stringify(value).replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"`
+					const escapedValue = JSON.stringify(value)
+						.replace(/\\/g, '\\\\')
+						.replace(/"/g, '\\"')
+					return `${key}="${escapedValue}"`
 				}
 
 				if (typeof value === 'string' && value.match(/\s/))
 				{
+					// FIXME: Quotes in value should be escaped, but the env parsing does not handle escaping
 					return `${key}="${value}"`
 				}
 
