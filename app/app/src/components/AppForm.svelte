@@ -198,10 +198,15 @@ onMount(() =>
 				if (allowDefaultInputValue)
 				{
 					inputValue = getDefaultInputValue(value)
-					convert()
 				}
+
+				convert()
 			})
 
+		selectedOutputType.subscribe(_ =>
+			{
+				convert()
+			})
 	})
 
 let allowDefaultInputValue: boolean = true
@@ -256,21 +261,18 @@ function swap()
 		return
 	}
 
-	// Save input & output values
-	const savedInputValue = inputValue
-	const savedOutputValue = outputValue
+	if (!allowDefaultInputValue)
+	{
+		// Swap input & output values
+		const savedInputValue = inputValue
+		inputValue = outputValue
+		outputValue = savedInputValue
+	}
 
 	// Swap selected input & output types
 	const currentInputType = $selectedInputType
 	selectedInputType.set(convertTo[$selectedOutputType].swapTo!)
 	selectedOutputType.set(convertFrom[currentInputType].swapTo!)
-
-	// Swap input & output values
-	inputValue = savedOutputValue
-	outputValue = savedInputValue
-
-	// Convert again
-	convert()
 }
 
 function copy()
@@ -308,7 +310,6 @@ function copy()
 				<InputSelect
 					options={inputTypes}
 					bind:selectedOption={$selectedInputType}
-					on:change={convert}
 				/>
 			</div>
 		</div>
@@ -323,7 +324,6 @@ function copy()
 					style={'bg-red-500'}
 					options={outputTypes}
 					bind:selectedOption={$selectedOutputType}
-					on:change={convert}
 				/>
 			</div>
 		</div>
