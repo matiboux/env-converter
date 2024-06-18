@@ -257,15 +257,18 @@ function swap()
 		return
 	}
 
+	// Save input & output values
+	const savedInputValue = inputValue
+	const savedOutputValue = outputValue
+
 	// Swap selected input & output types
 	const currentInputType = $selectedInputType
 	selectedInputType.set(convertTo[$selectedOutputType].swapTo!)
 	selectedOutputType.set(convertFrom[currentInputType].swapTo!)
 
 	// Swap input & output values
-	const tempValue = inputValue
-	inputValue = outputValue
-	outputValue = tempValue
+	inputValue = savedOutputValue
+	outputValue = savedInputValue
 
 	// Convert again
 	convert()
