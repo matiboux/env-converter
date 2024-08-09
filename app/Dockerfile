@@ -57,7 +57,7 @@ VOLUME /app/node_modules
 COPY --link --chmod=755 ./docker-dev-command.sh /usr/local/bin/docker-dev-command
 
 # Expose HTTP port
-ARG PORT=80
+ARG PORT=8080
 ENV PORT=${PORT}
 EXPOSE ${PORT}
 
@@ -99,7 +99,7 @@ WORKDIR /usr/share/nginx/html
 COPY --from=app_prod_build --link /app/dist .
 
 # Expose HTTP port
-ARG PORT=80
+ARG PORT=8080
 ENV PORT=${PORT}
 EXPOSE ${PORT}
 
