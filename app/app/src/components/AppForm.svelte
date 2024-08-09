@@ -50,6 +50,14 @@ function convertFromToml(input: string)
 	return tomlParse(input)
 }
 
+function convertFromDockerEnv(input: string)
+{
+	// Unescape dollar signs (shell variables)
+	input = input.replace(/\\\$/g, '$')
+
+	return tomlParse(input)
+}
+
 const convertFrom: Record<
 	string,
 	{
@@ -71,6 +79,10 @@ const convertFrom: Record<
 	'toml': {
 		label: _('TOML'),
 		convert: convertFromToml,
+	},
+	'docker-env': {
+		label: _('Docker .env file'),
+		convert: convertFromDockerEnv,
 	},
 }
 
