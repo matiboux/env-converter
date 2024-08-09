@@ -56,6 +56,11 @@ VOLUME /app/node_modules
 
 COPY --link --chmod=755 ./docker-dev-command.sh /usr/local/bin/docker-dev-command
 
+# Expose HTTP port
+ARG PORT=8080
+ENV PORT=${PORT}
+EXPOSE ${PORT}
+
 CMD [ "docker-dev-command" ]
 
 
@@ -92,3 +97,11 @@ WORKDIR /usr/share/nginx/html
 
 # Copy built static website files
 COPY --from=app_prod_build --link /app/dist .
+
+# Expose HTTP port
+ARG PORT=8080
+ENV PORT=${PORT}
+EXPOSE ${PORT}
+
+# Replace port in default Nginx configuration
+RUN sed -i 's/\(listen\s*\)80;/\1'"$PORT"';/' /etc/nginx/conf.d/default.conf

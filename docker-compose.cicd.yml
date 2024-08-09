@@ -1,5 +1,3 @@
-version: '3.4'
-
 # Services definition override for CI/CD
 
 services:
@@ -10,6 +8,6 @@ services:
     build:
       target: app_prod_build
     # Deploy override
+    command: [ "sh", "-c", "rm -rf /tmp/dist/* && cp -r /app/dist/* /tmp/dist" ]
     volumes:
       - ./app/dist:/tmp/dist
-    command: [ "sh", "-c", "rm -rf /tmp/dist/* && cp -r /app/dist/* /tmp/dist" ]
