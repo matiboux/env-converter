@@ -10,6 +10,7 @@ const defaultLocale =
 	'JSON (inline)',
 	'JSON (formatted)',
 	'TOML',
+	'Docker .env file',
 	'Azure',
 	'Input value',
 	'Convert',

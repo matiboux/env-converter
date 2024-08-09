@@ -12,6 +12,7 @@ const locale =
 	'JSON (inline)': 'JSON (compacté)',
 	'JSON (formatted)': 'JSON (formaté)',
 	'TOML': 'TOML',
+	'Docker .env file': 'Docker .env file',
 	'Azure': 'Azure',
 	'Input value': 'Valeur d\'entrée',
 	'Convert': 'Convertir',
