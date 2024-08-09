@@ -83,7 +83,6 @@ const convertFrom: Record<
 	'docker-env': {
 		label: _('Docker .env file'),
 		convert: convertFromDockerEnv,
-		swapTo: 'toml',
 	},
 }
 
