@@ -38,11 +38,19 @@ CMD [ "--help" ]
 
 FROM app_base AS app_runtime_base
 
-# GitHub context environment variables
-ARG GITHUB_REPOSITORY_URL=""
-ENV GITHUB_REPOSITORY_URL=${GITHUB_REPOSITORY_URL}
-ARG GITHUB_SHA=""
-ENV GITHUB_SHA=${GITHUB_SHA}
+# Set runtime environment
+ENV APP_ENV=dev
+ENV NODE_ENV=development
+
+# Install dev dependencies, required for build
+RUN --mount=type=bind,source=./app/package.json,target=./package.json \
+	--mount=type=bind,source=./app/package-lock.json,target=./package-lock.json \
+	--mount=type=bind,source=./app/tsconfig.json,target=./tsconfig.json \
+	--mount=type=cache,target=~/.npm \
+	npm clean-install --include=dev
+
+# Copy application source code
+COPY --link ./app .
 
 
 # --
@@ -50,21 +58,13 @@ ENV GITHUB_SHA=${GITHUB_SHA}
 
 FROM app_runtime_base AS app_dev
 
-ENV APP_ENV=dev
-ENV NODE_ENV=development
-
-# Source code should be mounted here
-VOLUME /app
-VOLUME /app/node_modules
-
-COPY --link --chmod=755 ./docker-dev-command.sh /usr/local/bin/docker-dev-command
-
-# Expose HTTP port
+# Set exposed port
 ARG PORT=8080
 ENV PORT=${PORT}
 EXPOSE ${PORT}
 
-CMD [ "docker-dev-command" ]
+# Start development server
+CMD [ "sh", "-c", "npm run dev -- --host --port \"${PORT}\"" ]
 
 
 # --
@@ -72,16 +72,15 @@ CMD [ "docker-dev-command" ]
 
 FROM app_runtime_base AS app_prod_build
 
+# Set runtime environment
 ENV APP_ENV=prod
 ENV NODE_ENV=production
 
-# Install dev dependencies, required for build
-COPY --link ./app/package*.json ./app/tsconfig*.json ./app/astro.config.mjs .
-RUN npm clean-install --include=dev && \
-	npm cache clean --force
-
-# Copy source code for build
-COPY --link ./app .
+# Use application environment variables
+ARG GITHUB_REPOSITORY_URL=""
+ENV GITHUB_REPOSITORY_URL=${GITHUB_REPOSITORY_URL}
+ARG GITHUB_SHA=""
+ENV GITHUB_SHA=${GITHUB_SHA}
 
 # Build application
 RUN npm run build
@@ -101,10 +100,10 @@ WORKDIR /usr/share/nginx/html
 # Copy built static website files
 COPY --from=app_prod_build --link /app/dist .
 
-# Expose HTTP port
+# Set exposed port
 ARG PORT=8080
 ENV PORT=${PORT}
 EXPOSE ${PORT}
 
-# Replace port in default Nginx configuration
-RUN sed -i 's/\(listen\s*\)80;/\1'"$PORT"';/' /etc/nginx/conf.d/default.conf
+# Start nginx server
+CMD [ "nginx", "-g", "daemon off;" ]
