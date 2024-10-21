@@ -1,4 +1,4 @@
-#syntax=docker/dockerfile:1.4
+#syntax=docker/dockerfile:1
 
 # This Dockerfile uses the service folder as context.
 
@@ -11,26 +11,32 @@ FROM nginx:alpine AS nginx_upstream
 
 
 # --
-# Npm image
+# Base image
 
-FROM node_upstream AS npm
+FROM node_upstream AS app_base
 
-# Create app directory
+# Set app directory
 WORKDIR /app
 
-# Source code should be mounted here
+
+# --
+# Npm image
+
+FROM app_base AS app_npm
+
+# Mount source code as volume
 VOLUME /app
 
-COPY --link --chmod=755 ./docker-npm-entrypoint.sh /usr/local/bin/docker-npm-entrypoint
-
-ENTRYPOINT [ "docker-npm-entrypoint" ]
+# Run npm command
+COPY --link --chmod=755 ./docker/npm-entrypoint.sh /usr/local/bin/app-npm-entrypoint
+ENTRYPOINT [ "app-npm-entrypoint" ]
 CMD [ "--help" ]
 
 
 # --
-# Base image
+# Runtime base image
 
-FROM node_upstream AS app_base
+FROM app_base AS app_runtime_base
 
 # GitHub context environment variables
 ARG GITHUB_REPOSITORY_URL=""
@@ -38,14 +44,11 @@ ENV GITHUB_REPOSITORY_URL=${GITHUB_REPOSITORY_URL}
 ARG GITHUB_SHA=""
 ENV GITHUB_SHA=${GITHUB_SHA}
 
-# Create app directory
-WORKDIR /app
-
 
 # --
 # Dev image
 
-FROM app_base AS app_dev
+FROM app_runtime_base AS app_dev
 
 ENV APP_ENV=dev
 ENV NODE_ENV=development
@@ -67,7 +70,7 @@ CMD [ "docker-dev-command" ]
 # --
 # Prod build image
 
-FROM app_base AS app_prod_build
+FROM app_runtime_base AS app_prod_build
 
 ENV APP_ENV=prod
 ENV NODE_ENV=production
