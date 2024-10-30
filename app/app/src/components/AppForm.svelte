@@ -302,6 +302,26 @@ function copy()
 
 	}
 }
+
+function sizeToString(size: number)
+{
+	if (size < 1024)
+	{
+		return `${size} B`
+	}
+
+	if (size < 1024 * 1024)
+	{
+		return `${(size / 1024).toFixed(2)} KiB`
+	}
+
+	if (size < 1024 * 1024 * 1024)
+	{
+		return `${(size / 1024 / 1024).toFixed(2)} MiB`
+	}
+
+	return `${(size / 1024 / 1024 / 1024).toFixed(2)} GiB`
+}
 </script>
 
 <div
@@ -410,7 +430,7 @@ function copy()
 				</button>
 				<p class="bg-gray-200 px-2 py-1 rounded-md text-sm text-gray-700">
 					Size:
-					{outputValue.length}
+					{sizeToString(outputValue.length)}
 				</p>
 			</div>
 		</div>
