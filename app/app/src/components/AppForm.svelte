@@ -393,7 +393,7 @@ function copy()
 				</div>
 			</label>
 
-			<div class="flex justify-start space-x-2 sm:pl-4">
+			<div class="flex justify-start items-center space-x-2 sm:pl-4">
 				<button
 					class="btn btn-secondary"
 					disabled={!canSwap}
@@ -408,6 +408,10 @@ function copy()
 				>
 					{_('Copy')}
 				</button>
+				<p class="bg-gray-200 px-2 py-1 rounded-md text-sm text-gray-700">
+					Size:
+					{outputValue.length}
+				</p>
 			</div>
 		</div>
 	</div>
