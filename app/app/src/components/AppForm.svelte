@@ -302,6 +302,26 @@ function copy()
 
 	}
 }
+
+function sizeToString(size: number)
+{
+	if (size < 1024)
+	{
+		return `${size} B`
+	}
+
+	if (size < 1024 * 1024)
+	{
+		return `${(size / 1024).toFixed(2)} KiB`
+	}
+
+	if (size < 1024 * 1024 * 1024)
+	{
+		return `${(size / 1024 / 1024).toFixed(2)} MiB`
+	}
+
+	return `${(size / 1024 / 1024 / 1024).toFixed(2)} GiB`
+}
 </script>
 
 <div
@@ -393,7 +413,7 @@ function copy()
 				</div>
 			</label>
 
-			<div class="flex justify-start space-x-2 sm:pl-4">
+			<div class="flex justify-start items-center space-x-2 sm:pl-4">
 				<button
 					class="btn btn-secondary"
 					disabled={!canSwap}
@@ -408,6 +428,10 @@ function copy()
 				>
 					{_('Copy')}
 				</button>
+				<p class="bg-gray-200 px-2 py-1 rounded-md text-sm text-gray-700">
+					Size:
+					{sizeToString(outputValue.length)}
+				</p>
 			</div>
 		</div>
 	</div>
