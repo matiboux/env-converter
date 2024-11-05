@@ -430,7 +430,7 @@ function sizeToString(size: number)
 				</button>
 				<p class="bg-gray-200 px-2 py-1 rounded-md text-sm text-gray-700">
 					Size:
-					{sizeToString(outputValue.length)}
+					{sizeToString(new Blob([ outputValue ]).size)}
 				</p>
 			</div>
 		</div>
