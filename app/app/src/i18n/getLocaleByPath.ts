@@ -1,4 +1,4 @@
-import i18nConfig from '/config/i18n'
+import { i18n as i18nConfig } from '~/config'
 
 // https://github.com/matiboux/astro/blob/7a39ff4b49c252de1778efd5e62caab45e074550/packages/astro/src/i18n/index.ts#L163
 function getLocaleByPath(path: string): string | undefined {

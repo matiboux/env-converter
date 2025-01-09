@@ -1,4 +1,4 @@
-import i18nConfig from '/config/i18n'
+import { i18n as i18nConfig } from '~/config'
 
 import defaultLocaleData from './locales/en'
 

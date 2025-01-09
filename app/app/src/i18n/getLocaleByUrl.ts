@@ -1,4 +1,4 @@
-import i18nConfig from '/config/i18n'
+import { i18n as i18nConfig } from '~/config'
 import getLocaleByPath from './getLocaleByPath'
 
 const defaultLocale = i18nConfig.defaultLocale
