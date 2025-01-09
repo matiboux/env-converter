@@ -40,6 +40,6 @@
     "toml": "^3.0.0"
   },
   "devDependencies": {
-    "@types/node": "^20.10.6"
+    "@types/node": "^22.10.5"
   }
 }
