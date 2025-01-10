@@ -2,7 +2,7 @@ import { defineConfig } from 'astro/config'
 import svelte from '@astrojs/svelte'
 import tailwind from '@astrojs/tailwind'
 
-import i18n from '/config/i18n'
+import { i18n } from '/src/config'
 
 // https://astro.build/config
 export default defineConfig({
