@@ -1,17 +1,24 @@
 import { i18n as i18nConfig } from '~/config'
 import type { Locales, I18nKeys } from './type'
 
+import en from './locales/en'
+import fr from './locales/fr'
+type LocaleKeys = Readonly<Record<Locales, Readonly<Record<string, string>>>>
+const localeKeys = { en, fr } satisfies LocaleKeys as LocaleKeys
+
 const defaultLocale = i18nConfig.defaultLocale
 
 const locales = new Set(i18nConfig.locales.map(locale => locale.path))
 
 function i18n(
 	locale: Locales | undefined,
-	keys: I18nKeys,
+	keys: I18nKeys | string,
 	...args: any[]
 )
 {
-	const value = keys[locale!] ?? keys[defaultLocale]
+	const value = typeof keys === 'string'
+		? ((localeKeys[locale!] ?? localeKeys[defaultLocale])?.[keys] ?? keys)
+		: (keys[locale!] ?? keys[defaultLocale])
 
 	if (!value)
 	{
