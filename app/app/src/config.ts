@@ -1,7 +1,8 @@
 import type { AstroConfig } from 'astro'
 
-export const i18n =
-{
+type I18nConfig = AstroConfig['i18n']
+
+export const i18n: I18nConfig = {
 	locales: [
 		{
 			codes: ['en', 'en_US'],
@@ -20,4 +21,4 @@ export const i18n =
 		prefixDefaultLocale: false,
 		fallbackType: 'rewrite',
 	},
-} as const satisfies AstroConfig['i18n']
+}
