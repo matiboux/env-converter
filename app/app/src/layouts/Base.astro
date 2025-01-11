@@ -34,7 +34,7 @@ export interface Props
 	bodyAttributes?: { [key: string]: string }
 }
 
-const description = typeof Astro.props.description !== 'string'
+const description = typeof Astro.props.description !== 'string' && Astro.props.description !== undefined
 	? _(Astro.props.description) : Astro.props.description
 
 const formatsToType = {
