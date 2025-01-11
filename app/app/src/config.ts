@@ -1,7 +1,12 @@
 import type { AstroConfig } from 'astro'
 
-export const i18n =
-{
+import en from './locales/en'
+import fr from './locales/fr'
+
+type LocaleKeys = Record<string, Record<string, string>>
+type I18nConfig = AstroConfig['i18n'] & { localeKeys: LocaleKeys }
+
+export const i18n: I18nConfig = {
 	locales: [
 		{
 			codes: ['en', 'en_US'],
@@ -16,8 +21,9 @@ export const i18n =
 	fallback: {
 		fr: 'en',
 	},
+	localeKeys: { en, fr },
 	routing: {
 		prefixDefaultLocale: false,
 		fallbackType: 'rewrite',
 	},
-} as const satisfies AstroConfig['i18n']
+}
