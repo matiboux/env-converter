@@ -3,7 +3,7 @@ import type { Locales, I18nKeys } from './type'
 
 const defaultLocale = i18nConfig.defaultLocale
 
-const locales = new Set(i18nConfig.locales.map(locale => locale.path))
+const locales = new Set(i18nConfig.locales.map(locale => typeof locale === 'string' ? locale : locale.path))
 
 function i18n(
 	locale: Locales | undefined,
