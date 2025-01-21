@@ -17,6 +17,6 @@ The site will be available at [http://localhost](http://localhost).
 
 ## License
 
-[MIT License](LICENSE)
+Copyright (c) 2024 [Matiboux](https://github.com/matiboux) ([matiboux.me](https://matiboux.me))
 
-Copyright (c) 2024 Matiboux ([matiboux.me](https://matiboux.me))
+Licensed under the [MIT License](https://opensource.org/license/MIT). You can see a copy in the [LICENSE](LICENSE) file.
