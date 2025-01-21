@@ -12,7 +12,7 @@ function i18n(
 )
 {
 	const value = typeof keys === 'string'
-		? ((i18nConfig.localeKeys[locale!] ?? i18nConfig.localeKeys[defaultLocale])?.[keys] ?? keys)
+		? ((i18nConfig.localeKeys?.[locale!] ?? i18nConfig.localeKeys?.[defaultLocale])?.[keys] ?? keys)
 		: (keys[locale!] ?? keys[defaultLocale])
 
 	if (!value)
