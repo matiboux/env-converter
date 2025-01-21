@@ -1,39 +1,53 @@
-import en from './locales/en'
-import fr from './locales/fr'
-import { defaultLocaleKey, type I18n } from './type'
+import { i18n as i18nConfig } from '~/config'
+import type { Locales, I18nKeys } from './type'
 
-const locales = { en, fr } as const
+const defaultLocale = i18nConfig.defaultLocale
+
+const locales = new Set(i18nConfig.locales.map(locale => typeof locale === 'string' ? locale : locale.path))
 
 function i18n(
-	locale: keyof typeof locales,
-	key: keyof I18n,
-	...args: string[]
+	locale: Locales | undefined,
+	keys: I18nKeys | string,
+	...args: any[]
 )
 {
-	const value = (locales[locale]?.[key] ?? key) as I18n[keyof I18n]
+	const value = typeof keys === 'string'
+		? ((i18nConfig.localeKeys?.[locale!] ?? i18nConfig.localeKeys?.[defaultLocale])?.[keys] ?? keys)
+		: (keys[locale!] ?? keys[defaultLocale])
 
-	if (typeof value !== 'string')
+	if (!value)
 	{
 		return value
 	}
 
-	return value.replace(/{(\d+)}/g, (match, number) =>
+	if (args.length === 1 && typeof args[0] === 'object')
+	{
+		// Arguments are passed as an object
+		args = args[0] as any
+	}
+
+	if (Array.isArray(args))
+	{
+		// Arguments are passed as an array
+		return value?.replace(/{(\d+)}/g, (match, number) =>
+			{
+				const index = Number.parseInt(number)
+				return String(args[index] ?? match)
+			}
+		)
+	}
+
+	// Arguments are passed as a dictionary
+	return value?.replace(/{([^}]+)}/g, (match, key) =>
 		{
-			const index = Number.parseInt(number)
-			return args[index] ?? match
+			return String(args[key] ?? match)
 		}
 	)
-}
-
-type Tail<T extends any[]> = ((...args: T) => any) extends (arg: any, ...tail: infer U) => any ? U : never
-
-function i18nFactory(locale: Parameters<typeof i18n>[0] | undefined)
-{
-	return (...args: Tail<Parameters<typeof i18n>>) => i18n(locale ?? defaultLocaleKey, ...args)
 }
 
 export default i18n
 
 export {
-	i18nFactory,
+	defaultLocale,
+	locales,
 }

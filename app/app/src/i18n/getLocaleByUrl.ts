@@ -1,5 +1,6 @@
-import i18nConfig from '/config/i18n'
-import getLocaleByPath from './getLocaleByPath'
+import { getLocaleByPath } from 'astro:i18n'
+
+import { i18n as i18nConfig } from '~/config'
 
 const defaultLocale = i18nConfig.defaultLocale
 
@@ -15,11 +16,16 @@ function getLocaleByUrl(url: URL | string, fallback: boolean = true): string | u
 			continue
 		}
 
-		const locale = getLocaleByPath(part)
-		if (locale)
+		try
 		{
-			return locale
+			const locale = getLocaleByPath(part)
+			if (locale)
+			{
+				return locale
+			}
 		}
+		catch (error)
+		{}
 	}
 
 	return fallback ? defaultLocale : undefined

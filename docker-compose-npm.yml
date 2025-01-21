@@ -1,16 +1,19 @@
-version: '3.4'
-
 # Services definition for running npm commands
 
 services:
 
-  npm:
-    # Build
-    image: ${IMAGES_PREFIX:-app}-npm:${DOCKER_TAG:-latest}
+  app:
+    # Extend
+    extends:
+      file: ./docker-compose.yml
+      service: app
+    # Build override
+    image: ${IMAGES_PREFIX:-app}-npm:${IMAGES_TAG:-latest}
     build:
-      context: ./app
-      dockerfile: ./Dockerfile
-      target: npm
-    # Deploy
+      target: app_npm
+      args: !reset []
+    # Deploy override
+    environment: !reset []
     volumes:
       - ./app/app:/app
+    ports: !reset []

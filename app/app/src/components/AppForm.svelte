@@ -50,6 +50,14 @@ function convertFromToml(input: string)
 	return tomlParse(input)
 }
 
+function convertFromDockerEnv(input: string)
+{
+	// Unescape dollar signs (shell variables)
+	input = input.replace(/\\\$/g, '$')
+
+	return tomlParse(input)
+}
+
 const convertFrom: Record<
 	string,
 	{
@@ -71,6 +79,10 @@ const convertFrom: Record<
 	'toml': {
 		label: _('TOML'),
 		convert: convertFromToml,
+	},
+	'docker-env': {
+		label: _('Docker .env file'),
+		convert: convertFromDockerEnv,
 	},
 }
 
@@ -203,6 +215,10 @@ onMount(() =>
 				convert()
 			})
 
+		selectedOutputType.subscribe(_ =>
+			{
+				convert()
+			})
 	})
 
 let allowDefaultInputValue: boolean = true
@@ -257,18 +273,18 @@ function swap()
 		return
 	}
 
+	if (!allowDefaultInputValue)
+	{
+		// Swap input & output values
+		const savedInputValue = inputValue
+		inputValue = outputValue
+		outputValue = savedInputValue
+	}
+
 	// Swap selected input & output types
 	const currentInputType = $selectedInputType
 	selectedInputType.set(convertTo[$selectedOutputType].swapTo!)
 	selectedOutputType.set(convertFrom[currentInputType].swapTo!)
-
-	// Swap input & output values
-	const tempValue = inputValue
-	inputValue = outputValue
-	outputValue = tempValue
-
-	// Convert again
-	convert()
 }
 
 function copy()
@@ -285,6 +301,26 @@ function copy()
 		outputValueElement.select()
 
 	}
+}
+
+function sizeToString(size: number)
+{
+	if (size < 1024)
+	{
+		return `${size} B`
+	}
+
+	if (size < 1024 * 1024)
+	{
+		return `${(size / 1024).toFixed(2)} KiB`
+	}
+
+	if (size < 1024 * 1024 * 1024)
+	{
+		return `${(size / 1024 / 1024).toFixed(2)} MiB`
+	}
+
+	return `${(size / 1024 / 1024 / 1024).toFixed(2)} GiB`
 }
 </script>
 
@@ -306,7 +342,6 @@ function copy()
 				<InputSelect
 					options={inputTypes}
 					bind:selectedOption={$selectedInputType}
-					on:change={convert}
 				/>
 			</div>
 		</div>
@@ -321,7 +356,6 @@ function copy()
 					style={'bg-red-500'}
 					options={outputTypes}
 					bind:selectedOption={$selectedOutputType}
-					on:change={convert}
 				/>
 			</div>
 		</div>
@@ -379,7 +413,7 @@ function copy()
 				</div>
 			</label>
 
-			<div class="flex justify-start space-x-2 sm:pl-4">
+			<div class="flex justify-start items-center space-x-2 sm:pl-4">
 				<button
 					class="btn btn-secondary"
 					disabled={!canSwap}
@@ -394,6 +428,10 @@ function copy()
 				>
 					{_('Copy')}
 				</button>
+				<p class="bg-gray-200 px-2 py-1 rounded-md text-sm text-gray-700">
+					Size:
+					{sizeToString(new Blob([ outputValue ]).size)}
+				</p>
 			</div>
 		</div>
 	</div>

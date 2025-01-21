@@ -1,18 +1,22 @@
-import getLocaleByPath from './getLocaleByPath'
+import i18n, { defaultLocale, locales } from './i18n'
+import i18nFactory from './i18nFactory'
 import getLocaleByUrl from './getLocaleByUrl'
 import getLocaleUrlList from './getLocaleUrlList'
 import getUrlWithoutLocale from './getUrlWithoutLocale'
-import i18n, { i18nFactory } from './i18n'
-import { defaultLocale, defaultLocaleKey } from './type'
 
-export default i18n
+import type { Locales, I18nKeys } from './type'
 
 export {
+	i18n,
 	defaultLocale,
-	defaultLocaleKey,
+	locales,
 	i18nFactory,
-	getLocaleByPath,
 	getLocaleByUrl,
-	getUrlWithoutLocale,
 	getLocaleUrlList,
+	getUrlWithoutLocale,
+}
+
+export type {
+	Locales,
+	I18nKeys
 }
