@@ -1,3 +1,5 @@
+import type { I18nKeys } from '~/i18n/type'
+
 const defaultLocale =
 [
 	// Index
@@ -27,19 +29,19 @@ const defaultLocale =
 	'No data is collected or processed over the network or on any server.',
 	'All data is processed locally in your browser, and stays on your own device.',
 	'This website uses no cookies and does no tracking.',
-] as const
+] as const satisfies Array<I18nKeys[keyof I18nKeys]>
 
-type Keys = typeof defaultLocale[number]
-type Type = { [key in Keys]: key }
+export type LocaleKeys = typeof defaultLocale[number]
+export type LocaleType = { [key in LocaleKeys]: key }
 
 // Default locale uses the key as the value
 const locale = defaultLocale
-	.reduce<Type>((acc, key) =>
+	.reduce<LocaleType>((acc, key) =>
 		{
 			(acc as any)[key] = key
 			return acc
 		},
-		{} as Type,
+		{} as LocaleType,
 	)
 
-export default locale as Readonly<typeof locale>
+export default locale
