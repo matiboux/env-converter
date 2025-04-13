@@ -39,6 +39,7 @@
     "astro-icon": "^1.1.5",
     "dotenv": "^16.5.0",
     "nanostores": "^1.0.1",
+    "sass": "^1.86.3",
     "svelte": "^5.26.2",
     "tailwindcss": "^4.1.3",
     "toml": "^3.0.0",
