@@ -1,4 +1,6 @@
-import type { I18n, Diff } from '../type'
+import type { Diff } from '~/i18n/type'
+
+import type { LocaleKeys as DefaultLocaleKeys } from './en'
 
 const locale =
 {
@@ -37,6 +39,6 @@ const locale =
 // Static type check
 export default locale satisfies
 	// Check for missing keys:
-	Readonly<Record<Diff<keyof I18n, keyof typeof locale>, string>> &
+	Readonly<Record<Diff<DefaultLocaleKeys, keyof typeof locale>, string>> &
 	// Check for extra keys:
-	Readonly<Record<Diff<keyof typeof locale, keyof I18n>, never>>
+	Readonly<Record<Diff<keyof typeof locale, DefaultLocaleKeys>, never>>
