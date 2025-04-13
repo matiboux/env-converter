@@ -1,18 +1,20 @@
 # Env Converter
 
+<!-- Uses `matiboux/astro-template` on commit `fce93abbe4d7fc43c21f7ec62d27f52457d311c7`. -->
+
 Online conversion tool for environment files.
 
 
 ## Development
 
-Locally, the site can be run with Docker.
+You can run the site locally with Docker Compose:
 
 ```bash
 docker compose watch
 # or: docker compose up
 ```
 
-The site will be available at [http://localhost](http://localhost).
+The site will be served at [http://localhost](http://localhost).
 
 
 ## License
