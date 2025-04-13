@@ -50,9 +50,6 @@ importers:
       nanostores:
         specifier: ^1.0.1
         version: 1.0.1
-      sass:
-        specifier: ^1.86.3
-        version: 1.86.3
       svelte:
         specifier: ^5.26.2
         version: 5.26.2
@@ -4171,7 +4168,8 @@ snapshots:
     dependencies:
       safer-buffer: 2.1.2
 
-  immutable@5.0.3: {}
+  immutable@5.0.3:
+    optional: true
 
   import-meta-resolve@4.1.0: {}
 
@@ -4979,6 +4977,7 @@ snapshots:
       source-map-js: 1.2.1
     optionalDependencies:
       '@parcel/watcher': 2.5.0
+    optional: true
 
   semver@7.7.1: {}
 
