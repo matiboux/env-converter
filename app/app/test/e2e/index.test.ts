@@ -3,5 +3,5 @@ import { test, expect } from '@playwright/test'
 test('has title', async ({ page }) =>
 {
 	await page.goto('/')
-	await expect(page).toHaveTitle('Astro Template')
+	await expect(page).toHaveTitle('Env Converter')
 });
