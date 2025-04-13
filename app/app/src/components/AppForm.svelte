@@ -336,9 +336,9 @@ function sizeToString(size: number)
 		<!-- Input type -->
 		<div class="space-y-4 col-span-2 sm:col-auto">
 			<div class="block space-y-2">
-				<span class="text-gray-700">
+				<div class="text-gray-700">
 					{_('Input type')}
-				</span>
+				</div>
 				<InputSelect
 					options={inputTypes}
 					bind:selectedOption={$selectedInputType}
@@ -349,9 +349,9 @@ function sizeToString(size: number)
 		<!-- Output type -->
 		<div class="space-y-4 col-span-2 sm:col-auto row-start-3 sm:row-start-auto">
 			<div class="block space-y-2">
-				<span class="text-gray-700">
+				<div class="text-gray-700">
 					{_('Output type')}
-				</span>
+				</div>
 				<InputSelect
 					style={'bg-red-500'}
 					options={outputTypes}
@@ -363,9 +363,9 @@ function sizeToString(size: number)
 		<!-- Input value -->
 		<div class="space-y-4 col-span-2 sm:col-auto">
 			<label class="block space-y-2 flex flex-col">
-				<span class="text-gray-700">
+				<div class="text-gray-700">
 					{_('Input value')}
-				</span>
+				</div>
 				<div class="h-48 sm:h-64 lg:h-80 xl:h-96">
 					<textarea
 						class="form-textarea bg-gray-100 block w-full h-full p-2 rounded-md flex-1 resize-none"
@@ -391,9 +391,9 @@ function sizeToString(size: number)
 		<!-- Output value -->
 		<div class="space-y-4 col-span-2 sm:col-auto">
 			<label class="block space-y-2 flex flex-col">
-				<span class="text-gray-700">
+				<div class="text-gray-700">
 					{_('Output value')}
-				</span>
+				</div>
 				<div class="h-48 sm:h-64 lg:h-80 xl:h-96">
 					{#if convertError}
 						<textarea
