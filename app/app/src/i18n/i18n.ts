@@ -1,53 +1,42 @@
 import { i18n as i18nConfig } from '~/config'
 import type { Locales, I18nKeys } from './type'
 
-const defaultLocale = i18nConfig.defaultLocale
+export const defaultLocale = i18nConfig.defaultLocale
 
-const locales = new Set(i18nConfig.locales.map(locale => typeof locale === 'string' ? locale : locale.path))
+export const locales = new Set(i18nConfig.locales.map(locale => typeof locale === 'string' ? locale : locale.path))
 
-function i18n(
+export function i18n(
 	locale: Locales | undefined,
 	keys: I18nKeys | string,
 	...args: any[]
-)
+): string
 {
 	const value = typeof keys === 'string'
 		? ((i18nConfig.localeKeys?.[locale!] ?? i18nConfig.localeKeys?.[defaultLocale])?.[keys] ?? keys)
-		: (keys[locale!] ?? keys[defaultLocale])
+		: (keys[locale!] ?? keys[defaultLocale] ?? Object.values(keys)[0] ?? '')
 
 	if (!value)
 	{
 		return value
 	}
 
-	if (args.length === 1 && typeof args[0] === 'object')
+	if (args.length >= 1)
 	{
-		// Arguments are passed as an object
-		args = args[0] as any
-	}
+		if (typeof args[0] === 'object')
+		{
+			// Arguments are passed as a dictionary
+			return value.replaceAll(
+				/{([^}]+)}/g,
+				(match, key) => String(args[0][key] ?? match),
+			)
+		}
 
-	if (Array.isArray(args))
-	{
 		// Arguments are passed as an array
-		return value?.replace(/{(\d+)}/g, (match, number) =>
-			{
-				const index = Number.parseInt(number)
-				return String(args[index] ?? match)
-			}
+		return value.replaceAll(
+			/{(\d+)}/g,
+			(match, number) => String(args[Number.parseInt(number)] ?? match),
 		)
 	}
 
-	// Arguments are passed as a dictionary
-	return value?.replace(/{([^}]+)}/g, (match, key) =>
-		{
-			return String(args[key] ?? match)
-		}
-	)
-}
-
-export default i18n
-
-export {
-	defaultLocale,
-	locales,
+	return value
 }
