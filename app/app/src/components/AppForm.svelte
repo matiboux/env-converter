@@ -19,38 +19,45 @@ export {
 import { i18nFactory } from '~/i18n'
 const _ = i18nFactory(locale as any)
 
-let inputValue = ''
-let outputValue = ''
-let outputValueElement = null
+type InputType = 'env' | 'json' | 'toml' | 'docker-env'
+type OutputType = 'env' | 'json_inline' | 'json' | 'azure'
+type InputValue = string
+type IntermediateValue = object | null
+type OutputValue = string
+type InputValues = Record<string, InputValue>
+
+let inputValue: InputValue = ''
+let outputValue: OutputValue = ''
+let outputValueElement: HTMLTextAreaElement | null = null
 let convertError: string | null = null
 
 const defaultInputValues = {
 	'env': '# .env example to get you started\nHOST=localhost\nPORT=80\nSECRET=secret',
 	'json': '{\n  "HOST": "localhost",\n  "PORT": 80,\n  "SECRET": "secret"\n}',
 	'toml': '# TOML example to get you started\nHOST = "localhost"\nPORT = 80\nSECRET = "secret"',
-}
+} as const satisfies InputValues
 
-function getDefaultInputValue(inputType: string)
+function getDefaultInputValue(inputType: InputType): string
 {
-	return defaultInputValues[inputType]
+	return (defaultInputValues as InputValues)[inputType] ?? ''
 }
 
-function convertFromEnv(input: string)
+function convertFromEnv(input: InputValue): IntermediateValue
 {
 	return dotenvParse(input)
 }
 
-function convertFromJson(input: string)
+function convertFromJson(input: InputValue): IntermediateValue
 {
 	return JSON.parse(input)
 }
 
-function convertFromToml(input: string)
+function convertFromToml(input: InputValue): IntermediateValue
 {
 	return tomlParse(input)
 }
 
-function convertFromDockerEnv(input: string)
+function convertFromDockerEnv(input: InputValue): IntermediateValue
 {
 	// Unescape dollar signs (shell variables)
 	input = input.replace(/\\\$/g, '$')
@@ -59,25 +66,25 @@ function convertFromDockerEnv(input: string)
 }
 
 const convertFrom: Record<
-	string,
+	InputType,
 	{
 		label: string,
-		convert: (input: string) => object,
+		convert: (input: string) => IntermediateValue,
 		swapTo?: keyof typeof convertTo,
 	}
 > = {
 	'env': {
-		label: _('.env file'),
+		label: _('.env file')!,
 		convert: convertFromEnv,
 		swapTo: 'env',
 	},
 	'json': {
-		label: _('JSON'),
+		label: _('JSON')!,
 		convert: convertFromJson,
 		swapTo: 'json',
 	},
 	'toml': {
-		label: _('TOML'),
+		label: _('TOML')!,
 		convert: convertFromToml,
 	},
 	'docker-env': {
@@ -86,8 +93,13 @@ const convertFrom: Record<
 	},
 }
 
-function convertToEnv(input: object)
+function convertToEnv(input: IntermediateValue): OutputValue
 {
+	if (!input)
+	{
+		return ''
+	}
+
 	return Object.entries(input)
 		.map(([key, value]) =>
 			{
@@ -106,33 +118,34 @@ function convertToEnv(input: object)
 		.join('\n')
 }
 
-function convertToJsonInline(input: object)
+function convertToJsonInline(input: IntermediateValue): OutputValue
 {
 	return JSON.stringify(input)
 }
 
-function convertToJson(input: object)
+function convertToJson(input: IntermediateValue): OutputValue
 {
 	return JSON.stringify(input, null, 2)
 }
 
-function convertToAzure(input: object)
+function convertToAzure(input: IntermediateValue): OutputValue
 {
-	return convertToJson(
-		Object.entries(input)
+	return convertToJson(input
+		? Object.entries(input)
 			.map(([key, value]) => ({
 				'name': key,
 				'value': typeof value === 'object' ? JSON.stringify(value) : value,
 				'slotSetting': false,
 			}))
+		: null
 	)
 }
 
 const convertTo: Record<
-	string,
+	OutputType,
 	{
 		label: string,
-		convert: (input: object) => string,
+		convert: (input: IntermediateValue) => OutputValue,
 		swapTo?: keyof typeof convertFrom,
 	}
 > = {
@@ -157,22 +170,28 @@ const convertTo: Record<
 	},
 }
 
-const inputTypes = Object.entries(convertFrom).reduce((acc, [key, {label}]) =>
-	{
-		acc[key] = label
-		return acc
-	}, {} as Record<string, string>)
+const inputTypes = Object.entries(convertFrom).reduce(
+	(acc, [ key, { label } ]) =>
+		{
+			acc[key as keyof typeof convertFrom] = label
+			return acc
+		},
+		{} as Record<keyof typeof convertFrom, typeof convertFrom[InputType]['label']>,
+)
 
-const outputTypes = Object.entries(convertTo).reduce((acc, [key, {label}]) =>
-	{
-		acc[key] = label
-		return acc
-	}, {} as Record<string, string>)
+const outputTypes = Object.entries(convertTo).reduce(
+	(acc, [ key, { label } ]) =>
+		{
+			acc[key as keyof typeof convertTo] = label
+			return acc
+		},
+		{} as Record<keyof typeof convertTo, typeof convertTo[OutputType]['label']>,
+)
 
-let selectedInputType = persistentAtom<keyof typeof convertFrom>('selectedInputType', Object.keys(inputTypes)[0]!)
-let selectedOutputType = persistentAtom<keyof typeof convertTo>('selectedOutputType', Object.keys(outputTypes)[2]!)
+let selectedInputType = persistentAtom<keyof typeof convertFrom>('selectedInputType', Object.keys(inputTypes)[0]! as InputType)
+let selectedOutputType = persistentAtom<keyof typeof convertTo>('selectedOutputType', Object.keys(outputTypes)[2]! as OutputType)
 
-let onInputConvertTimeout: number | undefined = undefined
+let onInputConvertTimeout: ReturnType<typeof setTimeout> | undefined = undefined
 
 function convert()
 {
@@ -190,11 +209,11 @@ function convert()
 
 	try
 	{
-		const value = convertFrom[$selectedInputType]?.convert(inputValue)
-		outputValue = convertTo[$selectedOutputType]?.convert(value)
+		const value = convertFrom[$selectedInputType]?.convert(inputValue) ?? null
+		outputValue = convertTo[$selectedOutputType]?.convert(value) ?? ''
 		convertError = null
 	}
-	catch (error)
+	catch (error: any)
 	{
 		outputValue = ''
 		convertError = error.message
