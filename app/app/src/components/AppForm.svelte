@@ -438,6 +438,8 @@ function sizeToString(size: number)
 </div>
 
 <style lang="scss">
+@reference "tailwindcss/theme";
+
 .btn {
 	@apply
 		bg-gray-400
