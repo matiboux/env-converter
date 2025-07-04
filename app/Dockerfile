@@ -225,7 +225,7 @@ FROM nginx_upstream AS app_prod
 # Set runtime environment
 ENV APP_ENV=prod
 
-# Copy app production build
+# Copy app production files
 COPY --from=app_prod_build --link /app/dist .
 
 # Set exposed port
