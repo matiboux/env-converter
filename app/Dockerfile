@@ -13,7 +13,7 @@ ARG UID=1001
 # Upstream images
 
 FROM node:22-slim AS node_upstream
-FROM bitnami/nginx:1.27 AS nginx_upstream
+FROM bitnami/nginx:1.29 AS nginx_upstream
 
 
 # --
