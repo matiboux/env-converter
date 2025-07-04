@@ -5,16 +5,31 @@
 Online conversion tool for environment files.
 
 
+## Building locally
+
 ## Development
 
-You can run the site locally with Docker Compose:
+Use this command to run the site locally for development:
 
 ```bash
 docker compose watch
 # or: docker compose up
 ```
 
-The site will be served at [http://localhost](http://localhost).
+Using `watch`, you'll benefit from file changes watching for sync & rebuild.
+
+The site will be served at [http://localhost:8080](http://localhost:8080).
+
+### Production
+
+Use this command to run the site locally for production:
+
+```bash
+docker compose -f docker-compose.yml -f docker-compose.prod.yml up
+# or: docker compose -f docker-compose.yml up
+```
+
+The site will be served at [http://localhost:8080](http://localhost:8080).
 
 
 ## License
