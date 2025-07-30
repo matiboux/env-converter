@@ -11,8 +11,9 @@
     "check": "astro check",
     "build": "astro check && astro build",
     "build-only": "astro build",
-    "preview": "astro preview",
     "astro": "astro",
+    "astro:sync": "astro sync",
+    "astro:preview": "astro preview",
     "test:vitest": "vitest run",
     "test:playwright": "playwright test"
   },
