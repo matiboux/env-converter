@@ -5,7 +5,8 @@ on:
   # Run on push on production branches
   push:
     branches:
-      - main # Production
+      # Production
+      - main
     paths:
       # CI files
       - '.github/workflows/deploy.yml'
@@ -18,7 +19,7 @@ on:
   # Run on manual triggers
   workflow_dispatch:
 
-# Set GITHUB_TOKEN permissions for the workflow
+# Set default GITHUB_TOKEN permissions for the workflow
 permissions:
   contents: read
 
@@ -54,9 +55,18 @@ jobs:
 
       - name: Build for production
         env:
+          # Build configuration
+          BUILD_CHECK: 'false' # Skip type checks
+          # Deployment configuration
           GITHUB_REPOSITORY_URL: https://github.com/${{ github.repository }}
           GITHUB_SHA: ${{ github.sha }}
-          BUILD_CHECK: "false" # Skip type checks
+          VERSION_TAG: ${{ vars.VERSION_TAG }}
+          # Astro configuration
+          ASTRO_SITE_URL: ${{ vars.ASTRO_SITE_URL }}
+          ASTRO_BASE_PATH: ${{ vars.ASTRO_BASE_PATH }}
+          ASTRO_ASSETS_PREFIX: ${{ vars.ASTRO_ASSETS_PREFIX }}
+          # Application configuration
+          # Add env vars for your application here.
         run: |
           # docker compose build
           export DOCKER_UID="$(id -u)"
@@ -91,8 +101,8 @@ jobs:
 
     # Set GITHUB_TOKEN permissions for the job
     permissions:
-      pages: write
       id-token: write
+      pages: write
 
     # Set deployment environment
     environment:

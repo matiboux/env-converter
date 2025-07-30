@@ -1,9 +1,8 @@
-import type { Diff } from '~/i18n/type'
+import type { Diff } from '~/i18n/types.d.ts'
 
-import type { LocaleKeys as DefaultLocaleKeys } from './en'
+import type { DefaultLocaleKeys } from './types.d.ts'
 
-const locale =
-{
+const locale = {
 	// Index
 	'Online conversion tool for environment files.': 'Outil de conversion en ligne pour les fichiers d\'environnement.',
 	// AppForm
@@ -36,9 +35,8 @@ const locale =
 		'Ce site web n\'utilise pas de cookies et ne fait pas de suivi.',
 } as const
 
-// Static type check
 export default locale satisfies
-	// Check for missing keys:
+	// Static type check for missing keys
 	Readonly<Record<Diff<DefaultLocaleKeys, keyof typeof locale>, string>> &
-	// Check for extra keys:
+	// Static type check for extra keys
 	Readonly<Record<Diff<keyof typeof locale, DefaultLocaleKeys>, never>>

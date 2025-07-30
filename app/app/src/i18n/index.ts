@@ -3,7 +3,7 @@ import { i18nFactory } from './i18nFactory'
 import { getLocaleByUrl } from './getLocaleByUrl'
 import { getLocaleUrlList } from './getLocaleUrlList'
 import { getUrlWithoutLocale } from './getUrlWithoutLocale'
-import type { Locales, I18nKeys } from './type'
+import type { Locales, I18nKeys } from './types.d.ts'
 
 export {
 	i18n,

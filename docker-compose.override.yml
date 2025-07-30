@@ -23,5 +23,3 @@ services:
         - action: sync
           path: ./app/app
           target: /app
-          ignore:
-            - node_modules/

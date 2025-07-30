@@ -1,7 +1,7 @@
 # -- Generic rules:
 
 # Environment files
-.env*.local
+.env*.local*
 
 # Temporary files
 ._*
