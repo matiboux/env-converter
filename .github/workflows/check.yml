@@ -5,8 +5,10 @@ on:
   # Run on pull requests to primary branches
   pull_request:
     branches:
-      - main # Production
-      - dev # Development
+      # Production
+      - main
+      # Development
+      - dev
     paths:
       # CI files
       - '.github/workflows/check.yml'
@@ -21,7 +23,7 @@ on:
   # Run on manual triggers
   workflow_dispatch:
 
-# Set GITHUB_TOKEN permissions for the workflow
+# Set default GITHUB_TOKEN permissions for the workflow
 permissions:
   contents: read
 
@@ -57,18 +59,27 @@ jobs:
 
       - name: Build for production
         env:
+          # Build configuration
+          BUILD_CHECK: 'true' # Run type checks
+          # Deployment configuration
           GITHUB_REPOSITORY_URL: https://github.com/${{ github.repository }}
           GITHUB_SHA: ${{ github.sha }}
-          BUILD_CHECK: "true" # Run type checks
+          VERSION_TAG: ${{ vars.VERSION_TAG }}
+          # Astro configuration
+          ASTRO_SITE_URL: ${{ vars.ASTRO_SITE_URL }}
+          ASTRO_BASE_PATH: ${{ vars.ASTRO_BASE_PATH }}
+          ASTRO_ASSETS_PREFIX: ${{ vars.ASTRO_ASSETS_PREFIX }}
+          # Application configuration
+          # Add env vars for your application here.
         run: |
           # docker compose build
-          echo "::group::Build details"
+          echo '::group::Build details'
           export DOCKER_UID="$(id -u)"
           docker compose \
             -f ./docker-compose.yml -f ./docker-compose.cicd.yml \
             --env-file .env \
             build
-          echo "::endgroup::"
+          echo '::endgroup::'
 
       - name: Copy application files
         run: |
@@ -83,8 +94,8 @@ jobs:
         run: |
           # Check application files
           [ -d ./app/dist ] && [ $(ls -1 ./app/dist | wc -l) -gt 0 ] \
-            && echo "Application files found" \
-            || ( echo "No application files found" && exit 1 )
+            && echo 'Application files found' \
+            || ( echo 'No application files found' && exit 1 )
 
   # Test Unit job
   test-unit:
@@ -109,21 +120,29 @@ jobs:
             --env-file .env \
             pull --ignore-buildable
 
-      - name: Build for E2E tests
+      - name: Build for unit tests
         env:
+          # Deployment configuration
           GITHUB_REPOSITORY_URL: https://github.com/${{ github.repository }}
           GITHUB_SHA: ${{ github.sha }}
+          VERSION_TAG: ${{ vars.VERSION_TAG }}
+          # Astro configuration
+          ASTRO_SITE_URL: ${{ vars.ASTRO_SITE_URL }}
+          ASTRO_BASE_PATH: ${{ vars.ASTRO_BASE_PATH }}
+          ASTRO_ASSETS_PREFIX: ${{ vars.ASTRO_ASSETS_PREFIX }}
+          # Application configuration
+          # Add env vars for your application here.
         run: |
           # docker compose build
-          echo "::group::Build details"
+          echo '::group::Build details'
           export DOCKER_UID="$(id -u)"
           docker compose \
             -f ./docker-compose.yml -f ./docker-compose.test-unit.yml \
             --env-file .env \
             build
-          echo "::endgroup::"
+          echo '::endgroup::'
 
-      - name: Start E2E tests
+      - name: Start unit tests
         run: |
           # docker compose up
           export DOCKER_UID="$(id -u)"
@@ -132,7 +151,7 @@ jobs:
             --env-file .env \
             up -d
 
-      - name: List E2E tests services
+      - name: List unit tests services
         run: |
           # Set DOCKER_SERVICES environment variable
           DOCKER_SERVICES="$(
@@ -142,11 +161,11 @@ jobs:
               config --services
           )"
           echo "Set DOCKER_SERVICES to '${DOCKER_SERVICES}'"
-          echo "DOCKER_SERVICES<<GITHUB_ENV_EOF" >> $GITHUB_ENV
+          echo 'DOCKER_SERVICES<<GITHUB_ENV_EOF' >> $GITHUB_ENV
           echo "${DOCKER_SERVICES}" >> $GITHUB_ENV
           echo 'GITHUB_ENV_EOF' >> $GITHUB_ENV
 
-      - name: Wait for E2E tests to finish
+      - name: Wait for unit tests to finish
         env:
           DOCKER_SERVICES: ${{ env.DOCKER_SERVICES }}
         run: |
@@ -157,7 +176,7 @@ jobs:
             wait $DOCKER_SERVICES \
             || exit 0
 
-      - name: Print E2E tests logs
+      - name: Print unit tests logs
         env:
           DOCKER_SERVICES: ${{ env.DOCKER_SERVICES }}
         run: |
@@ -168,7 +187,7 @@ jobs:
               -f ./docker-compose.yml -f ./docker-compose.test-unit.yml \
               --env-file .env \
               logs --no-log-prefix $SERVICE
-            echo "::endgroup::"
+            echo '::endgroup::'
           done
 
           # Check services exit codes
@@ -216,17 +235,25 @@ jobs:
 
       - name: Build for E2E tests
         env:
+          # Deployment configuration
           GITHUB_REPOSITORY_URL: https://github.com/${{ github.repository }}
           GITHUB_SHA: ${{ github.sha }}
+          VERSION_TAG: ${{ vars.VERSION_TAG }}
+          # Astro configuration
+          ASTRO_SITE_URL: ${{ vars.ASTRO_SITE_URL }}
+          ASTRO_BASE_PATH: ${{ vars.ASTRO_BASE_PATH }}
+          ASTRO_ASSETS_PREFIX: ${{ vars.ASTRO_ASSETS_PREFIX }}
+          # Application configuration
+          # Add env vars for your application here.
         run: |
           # docker compose build
-          echo "::group::Build details"
+          echo '::group::Build details'
           export DOCKER_UID="$(id -u)"
           docker compose \
             -f ./docker-compose.yml -f ./docker-compose.test-e2e.yml \
             --env-file .env \
             build
-          echo "::endgroup::"
+          echo '::endgroup::'
 
       - name: Start E2E tests
         run: |
@@ -247,7 +274,7 @@ jobs:
               config --services
           )"
           echo "Set DOCKER_SERVICES to '${DOCKER_SERVICES}'"
-          echo "DOCKER_SERVICES<<GITHUB_ENV_EOF" >> $GITHUB_ENV
+          echo 'DOCKER_SERVICES<<GITHUB_ENV_EOF' >> $GITHUB_ENV
           echo "${DOCKER_SERVICES}" >> $GITHUB_ENV
           echo 'GITHUB_ENV_EOF' >> $GITHUB_ENV
 
@@ -273,7 +300,7 @@ jobs:
               -f ./docker-compose.yml -f ./docker-compose.test-e2e.yml \
               --env-file .env \
               logs --no-log-prefix $SERVICE
-            echo "::endgroup::"
+            echo '::endgroup::'
           done
 
           # Check services exit codes
