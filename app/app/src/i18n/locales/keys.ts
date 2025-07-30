@@ -1,7 +1,6 @@
-import type { I18nKeys } from '~/i18n/type'
+import type { DefaultLocale } from '~/i18n/types.d.ts'
 
-const defaultLocale =
-[
+export const localeKeys = [
 	// Index
 	'Online conversion tool for environment files.',
 	// AppForm
@@ -29,19 +28,6 @@ const defaultLocale =
 	'No data is collected or processed over the network or on any server.',
 	'All data is processed locally in your browser, and stays on your own device.',
 	'This website uses no cookies and does no tracking.',
-] as const satisfies Array<I18nKeys[keyof I18nKeys]>
+] as const satisfies DefaultLocale
 
-export type LocaleKeys = typeof defaultLocale[number]
-export type LocaleType = { [key in LocaleKeys]: key }
-
-// Default locale uses the key as the value
-const locale = defaultLocale
-	.reduce<LocaleType>((acc, key) =>
-		{
-			(acc as any)[key] = key
-			return acc
-		},
-		{} as LocaleType,
-	)
-
-export default locale
+export type DefaultLocaleConst = typeof localeKeys
