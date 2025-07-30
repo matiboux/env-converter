@@ -64,7 +64,14 @@ function convertFromDockerEnv(input: InputValue): IntermediateValue
 	// Unescape dollar signs (shell variables)
 	input = input.replace(/\\\$/g, '$')
 
-	return tomlParse(input)
+	try
+	{
+		return tomlParse(input)
+	}
+	catch (_)
+	{
+		return dotenvParse(input)
+	}
 }
 
 const convertFrom: Record<
@@ -102,7 +109,7 @@ const convertFrom: Record<
 				{
 					data = JSON.parse(input)
 				}
-				catch (error)
+				catch (_)
 				{
 					data = null
 				}
