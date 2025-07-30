@@ -26,7 +26,7 @@ export default defineConfig({
 
   // Start the local server before starting tests
   webServer: {
-    command: 'pnpm run preview',
+    command: 'pnpm run astro:preview',
     url: 'http://localhost:4321',
   },
 });
