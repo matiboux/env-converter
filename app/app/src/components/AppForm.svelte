@@ -19,7 +19,7 @@ export {
 import { i18nFactory } from '~/i18n'
 const _ = i18nFactory(locale as any)
 
-type InputType = 'env' | 'json' | 'toml' | 'docker-env'
+type InputType = 'env' | 'json' | 'toml' | 'docker-env' | 'azure'
 type OutputType = 'env' | 'json_inline' | 'json' | 'azure'
 type InputValue = string
 type IntermediateValue = object | null
@@ -35,6 +35,8 @@ const defaultInputValues = {
 	'env': '# .env example to get you started\nHOST=localhost\nPORT=80\nSECRET=secret',
 	'json': '{\n  "HOST": "localhost",\n  "PORT": 80,\n  "SECRET": "secret"\n}',
 	'toml': '# TOML example to get you started\nHOST = "localhost"\nPORT = 80\nSECRET = "secret"',
+	'docker-env': '# .env example to get you started\nHOST=localhost\nPORT=80\nSECRET=secret',
+	'azure': '[\n  {\n   "name": "HOST",\n    "value": "localhost",\n    "slotSetting": false\n  },\n  {\n    "name": "PORT",\n    "value": "80",\n    "slotSetting": false\n  },\n  {\n    "name": "SECRET",\n    "value": "secret",\n    "slotSetting": false\n}\n]',
 } as const satisfies InputValues
 
 function getDefaultInputValue(inputType: InputType): string
@@ -90,6 +92,36 @@ const convertFrom: Record<
 	'docker-env': {
 		label: _('Docker .env file'),
 		convert: convertFromDockerEnv,
+	},
+	'azure': {
+		label: _('Azure App Settings'),
+		convert: (input: InputValue) =>
+			{
+				let data: any
+				try
+				{
+					data = JSON.parse(input)
+				}
+				catch (error)
+				{
+					data = null
+				}
+				if (!data || !Array.isArray(data))
+				{
+					throw new Error(_('Invalid Azure App Settings format'))
+				}
+				return Object.fromEntries(
+					data.map((item: any) =>
+						{
+							if (!item || typeof item.name !== 'string' || !('value' in item))
+							{
+								throw new Error(_('Invalid Azure App Settings item format'))
+							}
+							return [item.name, item.value]
+						}),
+				)
+			},
+		swapTo: 'azure',
 	},
 }
 
@@ -165,8 +197,9 @@ const convertTo: Record<
 		swapTo: 'json',
 	},
 	'azure': {
-		label: _('Azure'),
+		label: _('Azure App Settings'),
 		convert: convertToAzure,
+		swapTo: 'azure',
 	},
 }
 
