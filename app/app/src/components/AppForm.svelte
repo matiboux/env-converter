@@ -97,14 +97,29 @@ const convertFrom: Record<
 		label: _('Azure App Settings'),
 		convert: (input: InputValue) =>
 			{
+				let data: any
 				try
 				{
-					return JSON.parse(input)
+					data = JSON.parse(input)
 				}
 				catch (error)
 				{
+					data = null
+				}
+				if (!data || !Array.isArray(data))
+				{
 					throw new Error(_('Invalid Azure App Settings format'))
 				}
+				return Object.fromEntries(
+					data.map((item: any) =>
+						{
+							if (!item || typeof item.name !== 'string' || !('value' in item))
+							{
+								throw new Error(_('Invalid Azure App Settings item format'))
+							}
+							return [item.name, item.value]
+						}),
+				)
 			},
 		swapTo: 'azure',
 	},
