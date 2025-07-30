@@ -182,7 +182,7 @@ const convertTo: Record<
 		swapTo: 'json',
 	},
 	'azure': {
-		label: _('Azure'),
+		label: _('Azure App Settings'),
 		convert: convertToAzure,
 	},
 }
