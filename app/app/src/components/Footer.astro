@@ -25,16 +25,21 @@ const buildVersion = githubSha ? githubSha.slice(0, 7) : 'dev'
 		</h3>
 		<p>
 			<span class="icon-[mdi--github] icon-align"></span>
-			<Fragment set:html={_('See the source code on {0}', `<a href="${githubRepositoryUrl ?? '#'}">GitHub</a>`)} />
+			{_('See the source code on')}
+			<a href={githubRepositoryUrl ?? '#'}>GitHub</a>
 			<small>(v. {buildVersion})</small>
 		</p>
 		<p>
 			<span class="icon-[mdi--fire] icon-align"></span>
-			<Fragment set:html={_('Built with {0}, served by {1}', '<a href="https://astro.build/">Astro</a>', '<a href="https://pages.github.com/">GitHub Pages</a>')} />
+			{_('Built with')}
+			<a href="https://astro.build/">Astro</a>,
+			{_('served by')}
+			<a href="https://pages.github.com/">GitHub Pages</a>
 		</p>
 		<p>
 			<span class="icon-[mdi--heart] icon-align text-red-500"></span>
-			<Fragment set:html={_('Made with love by {0}', '<a href="https://matiboux.me/">Matiboux</a>')} />
+			{_('Made with love by')}
+			<a href="https://matiboux.me/">Matiboux</a>
 		</p>
 	</div>
 
@@ -86,16 +91,11 @@ footer {
 		a {
 			@apply
 				text-blue-500
+				hover:text-blue-700 hover:underline
 				;
-
-			&:hover {
-				@apply
-					text-blue-700
-					;
-			}
 		}
 
-		b {
+		strong, b {
 			@apply
 				font-semibold
 				;
