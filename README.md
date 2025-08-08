@@ -1,6 +1,6 @@
 # Env Converter
 
-<!-- Uses `matiboux/astro-template` on commit `d9108e3de036cd64244baac489a9e0f2e23b7862`. -->
+<!-- Uses `matiboux/astro-template` on commit `32d630c77aef23e3c26739ac4aac4768e7b85973`. -->
 
 Online conversion tool for environment files.
 
