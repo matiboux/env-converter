@@ -1,5 +1,13 @@
 name: Deploy CD
 
+# GitHub variables:
+# - VERSION_TAG
+# - ASTRO_SITE_URL
+# - ASTRO_BASE_PATH
+# - ASTRO_ASSETS_PREFIX
+
+# GitHub secrets: N/A
+
 on:
 
   # Run on push on production branches
@@ -8,7 +16,7 @@ on:
       # Production
       - main
     paths:
-      # CI files
+      # CI/CD files
       - '.github/workflows/deploy.yml'
       - 'docker-compose.yml'
       - 'docker-compose.cicd.yml'
@@ -38,7 +46,7 @@ jobs:
 
     steps:
 
-      # Steps dependencies
+      # Dependency steps
 
       - name: Checkout
         uses: actions/checkout@v4
@@ -110,6 +118,8 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
+
+      # Execution steps
 
       - name: Deploy to GitHub Pages
         id: deployment

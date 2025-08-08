@@ -8,9 +8,9 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "check": "astro check",
-    "build": "astro check && astro build",
+    "check": "astro check --tsconfig tsconfig.prod.json",
     "build-only": "astro build",
+"build": "npm run check && npm run build-only",
     "astro": "astro",
     "astro:sync": "astro sync",
     "astro:preview": "astro preview",
