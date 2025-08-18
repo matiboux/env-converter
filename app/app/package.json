@@ -10,12 +10,13 @@
     "start": "astro dev",
     "check": "astro check --tsconfig tsconfig.prod.json",
     "build-only": "astro build",
-"build": "npm run check && npm run build-only",
+    "build": "npm run check && npm run build-only",
     "astro": "astro",
     "astro:sync": "astro sync",
     "astro:preview": "astro preview",
     "test:vitest": "vitest run",
-    "test:playwright": "playwright test"
+    "test:playwright": "playwright test",
+    "deps:update": "pnpx -- npm-check-updates -t semver -u && pnpm i"
   },
   "repository": {
     "type": "git",
@@ -28,25 +29,25 @@
   "dependencies": {
     "@astrojs/check": "^0.9.4",
     "@astrojs/svelte": "^7.1.0",
-    "@iconify-json/eos-icons": "^1.2.2",
+    "@iconify-json/eos-icons": "^1.2.4",
     "@iconify-json/mdi": "^1.2.3",
-    "@iconify-json/twemoji": "^1.2.2",
+    "@iconify-json/twemoji": "^1.2.4",
     "@iconify-json/uil": "^1.2.3",
     "@iconify/tailwind4": "^1.0.6",
     "@nanostores/persistent": "^1.1.0",
-    "@tailwindcss/vite": "^4.1.11",
-    "astro": "^5.12.9",
+    "@tailwindcss/vite": "^4.1.12",
+    "astro": "^5.13.2",
     "dotenv": "^16.6.1",
     "nanostores": "^1.0.1",
     "sass": "^1.90.0",
-    "svelte": "^5.38.0",
-    "tailwindcss": "^4.1.11",
+    "svelte": "^5.38.2",
+    "tailwindcss": "^4.1.12",
     "toml": "^3.0.0",
     "typescript": "^5.9.2"
   },
   "devDependencies": {
     "@playwright/test": "^1.54.2",
-    "@types/node": "^22.17.1",
+    "@types/node": "^22.17.2",
     "vitest": "^3.2.4"
   }
 }
