@@ -25,9 +25,10 @@ const locale = {
 	'Copy': 'Copier',
 	// Footer
 	'Open source project': 'Projet open source',
-	'See the source code on {0}': 'Voir le code source sur {0}',
-	'Built with {0}, served by {1}': 'Construit avec {0}, servi par {1}',
-	'Made with love by {0}': 'Créé avec amour par {0}',
+	'See the source code on': 'Voir le code source sur',
+	'Built with': 'Construit avec',
+	'served by': 'servi par',
+	'Made with love by': 'Créé avec amour par',
 	'Data privacy': 'Confidentialité des données',
 	'No data is collected or processed over the network or on any server.':
 		'Aucune donnée n\'est collectée ou traitée sur le réseau ou sur un serveur.',
