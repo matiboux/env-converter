@@ -497,7 +497,7 @@ function sizeToString(size: number)
 </div>
 
 <style lang="scss">
-@reference "tailwindcss/theme";
+@reference "#tailwind.css";
 
 .btn {
 	@apply

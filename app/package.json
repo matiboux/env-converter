@@ -15,8 +15,7 @@
     "astro:sync": "astro sync",
     "astro:preview": "astro preview",
     "test:vitest": "vitest run",
-    "test:playwright": "playwright test",
-    "deps:update": "pnpx npm-check-updates -t semver -u && pnpm i"
+    "test:playwright": "playwright test"
   },
   "repository": {
     "type": "git",
@@ -27,27 +26,40 @@
   },
   "homepage": "https://github.com/matiboux/env-converter#readme",
   "dependencies": {
-    "@astrojs/check": "^0.9.4",
-    "@astrojs/svelte": "^7.2.0",
+    "@astrojs/check": "^0.9.8",
+    "@astrojs/svelte": "^7.2.5",
     "@iconify-json/eos-icons": "^1.2.4",
     "@iconify-json/mdi": "^1.2.3",
-    "@iconify-json/twemoji": "^1.2.4",
+    "@iconify-json/twemoji": "^1.2.5",
     "@iconify-json/uil": "^1.2.3",
-    "@iconify/tailwind4": "^1.0.6",
-    "@nanostores/persistent": "^1.1.0",
-    "@tailwindcss/vite": "^4.1.14",
-    "astro": "^5.15.9",
+    "@iconify/tailwind4": "^1.2.3",
+    "@nanostores/persistent": "^1.3.3",
+    "@tailwindcss/vite": "^4.2.2",
+    "astro": "^5.18.1",
     "dotenv": "^16.6.1",
-    "nanostores": "^1.0.1",
-    "sass": "^1.93.2",
-    "svelte": "^5.53.5",
-    "tailwindcss": "^4.1.14",
+    "nanostores": "^1.2.0",
+    "sass": "^1.98.0",
+    "svelte": "^5.54.0",
+    "tailwindcss": "^4.2.2",
     "toml": "^3.0.0",
     "typescript": "^5.9.3"
   },
   "devDependencies": {
-    "@playwright/test": "^1.56.0",
-    "@types/node": "^22.18.10",
+    "@playwright/test": "^1.58.2",
+    "@types/node": "^22.19.15",
     "vitest": "^3.2.4"
+  },
+  "pnpm": {
+    "overrides": {
+      "volar-service-emmet@0.0.66": "0.0.67",
+      "lodash@>=4.0.0 <=4.17.22": ">=4.17.23",
+      "svgo@=4.0.0": ">=4.0.1",
+      "devalue@<5.6.4": ">=5.6.4",
+      "devalue@<=5.6.3": ">=5.6.4"
+    }
+  },
+  "imports": {
+    "#global.css": "./src/styles/global.css",
+    "#tailwind.css": "./src/styles/tailwind.css"
   }
 }
