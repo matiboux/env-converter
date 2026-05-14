@@ -39,7 +39,7 @@
     "dotenv": "^16.6.1",
     "nanostores": "^1.2.0",
     "sass": "^1.98.0",
-    "svelte": "^5.54.0",
+    "svelte": "^5.55.7",
     "tailwindcss": "^4.2.2",
     "toml": "^3.0.0",
     "typescript": "^5.9.3"
