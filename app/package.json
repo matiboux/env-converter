@@ -28,7 +28,7 @@
   "homepage": "https://github.com/matiboux/env-converter#readme",
   "dependencies": {
     "@astrojs/check": "^0.9.10",
-    "@astrojs/svelte": "^7.2.5",
+    "@astrojs/svelte": "^9.0.1",
     "@iconify-json/eos-icons": "^1.2.4",
     "@iconify-json/mdi": "^1.2.3",
     "@iconify-json/twemoji": "^1.2.5",
