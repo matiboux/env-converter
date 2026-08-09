@@ -50,12 +50,17 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
 
+    # Only run if:
+    # - Checks are not disabled
+    if: |
+      vars.CI_DISABLE_CHECKS != 'true'
+
     steps:
 
-      # Dependency steps
+      # Initialization steps
 
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       # Execution steps
 
@@ -81,7 +86,7 @@ jobs:
           ASTRO_SITE_URL: ${{ vars.ASTRO_SITE_URL }}
           ASTRO_BASE_PATH: ${{ vars.ASTRO_BASE_PATH }}
           ASTRO_ASSETS_PREFIX: ${{ vars.ASTRO_ASSETS_PREFIX }}
-          # Application
+          # Application (app env vars)
           # (Add env vars for your application here.)
         run: |
           # docker compose build
@@ -117,12 +122,21 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
 
+    # Only run if:
+    # - Checks are not disabled
+    # - Tests are not disabled
+    # - Unit tests are not disabled
+    if: |
+      vars.CI_DISABLE_CHECKS != 'true' &&
+      vars.CI_DISABLE_TESTS != 'true' &&
+      vars.CI_DISABLE_TESTS_UNIT != 'true'
+
     steps:
 
-      # Dependency steps
+      # Initialization steps
 
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       # Execution steps
 
@@ -146,7 +160,7 @@ jobs:
           ASTRO_SITE_URL: ${{ vars.ASTRO_SITE_URL }}
           ASTRO_BASE_PATH: ${{ vars.ASTRO_BASE_PATH }}
           ASTRO_ASSETS_PREFIX: ${{ vars.ASTRO_ASSETS_PREFIX }}
-          # Application
+          # Application (app env vars)
           # (Add env vars for your application here.)
         run: |
           # docker compose build
@@ -234,12 +248,21 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
 
+    # Only run if:
+    # - Checks are not disabled
+    # - Tests are not disabled
+    # - E2E tests are not disabled
+    if: |
+      vars.CI_DISABLE_CHECKS != 'true' &&
+      vars.CI_DISABLE_TESTS != 'true' &&
+      vars.CI_DISABLE_TESTS_E2E != 'true'
+
     steps:
 
-      # Dependency steps
+      # Initialization steps
 
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       # Execution steps
 
@@ -263,7 +286,7 @@ jobs:
           ASTRO_SITE_URL: ${{ vars.ASTRO_SITE_URL }}
           ASTRO_BASE_PATH: ${{ vars.ASTRO_BASE_PATH }}
           ASTRO_ASSETS_PREFIX: ${{ vars.ASTRO_ASSETS_PREFIX }}
-          # Application
+          # Application (app env vars)
           # (Add env vars for your application here.)
         run: |
           # docker compose build
