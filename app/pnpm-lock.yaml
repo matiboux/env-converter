@@ -57,8 +57,8 @@ importers:
         specifier: ^4.3.3
         version: 4.3.3
       toml:
-        specifier: ^3.0.0
-        version: 3.0.0
+        specifier: ^5.0.1
+        version: 5.0.1
     devDependencies:
       '@playwright/test':
         specifier: ^1.62.1
@@ -1983,8 +1983,9 @@ packages:
     resolution: {integrity: sha512-yau8yJdTt989Mm0Bd/236QnzEiPf2xLLTqUZRUJOo/3CB078LSwzei343DgtJVmfJKJE3TMINY1u42SQsP6mXw==}
     engines: {node: '>=14.0.0'}
 
-  toml@3.0.0:
-    resolution: {integrity: sha512-y/mWCZinnvxjTKYhJ+pYxwD0mRLVvOtdS2Awbgxln6iEnt4rk0yBxeSBHkGJcPucRiG0e55mwWp+g/05rsrd6w==}
+  toml@5.0.1:
+    resolution: {integrity: sha512-EqYNA/YvUNndrA2B3O2ojzLQoTQrBxeZ9UIjQwk8t10oe6n7dwclBwd9IdZQTOKwe6vWX+AXtl6IntXRbepdxQ==}
+    engines: {node: '>=20'}
 
   trim-lines@3.0.1:
     resolution: {integrity: sha512-kRj8B+YHZCc9kQYdWfJB2/oUl9rA99qbowYYBtr4ui4mZyAQ2JpvVBd/6U2YloATfqBhBTSMhTpgBHtU0Mf3Rg==}
@@ -4188,7 +4189,7 @@ snapshots:
 
   tinyrainbow@3.1.1: {}
 
-  toml@3.0.0: {}
+  toml@5.0.1: {}
 
   trim-lines@3.0.1: {}
 
